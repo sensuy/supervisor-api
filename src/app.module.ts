@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmConfig } from './config/typeorm.config';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
@@ -8,7 +10,8 @@ import { UserModule } from './modules/user/user.module';
       isGlobal: true,
       load: [],
     }),
+    TypeOrmModule.forRootAsync({ useClass: TypeOrmConfig }),
     UserModule
   ],
 })
-export class AppModule {}
+export class AppModule { }
