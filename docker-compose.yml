@@ -7,6 +7,7 @@ services:
     ports:
       - "3000:3000"
       - "3001:3001"
+    entrypoint: wait-for postgres:5432 -t 40  -- ./start.sh
     env_file:
       - .env
     volumes:
@@ -23,6 +24,6 @@ services:
     environment:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_USER: ${DATABASE_USER}
-      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_DB: ${DATABASE_NAME}
     volumes:
       - ./database:/var/lib/postgresql/data
