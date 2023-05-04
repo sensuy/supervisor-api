@@ -2,7 +2,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
 
 export const swagger = (app: INestApplication, environment: string) => {
-  if (environment !== 'development') return;
+  if (environment === 'production') return;
   
   // document options
   const docOptions = new DocumentBuilder()
