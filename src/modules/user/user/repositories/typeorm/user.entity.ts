@@ -5,9 +5,9 @@ import { UserInterface } from "../../interfaces/user.interface";
 @Entity('user')
 export class User extends CommonEntity implements UserInterface {
   @Column({ type: 'text', nullable: false })
-  name: string;
+  username: string;
   @Column({ type: 'text', nullable: false })
-  email: string;
+  email: string; 
   @Column({ type: 'text', nullable: false })
   password: string;
   @Column({ type: 'text', nullable: false })
