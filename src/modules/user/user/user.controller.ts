@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { JoiValidationPipe } from '@shared/pipes/joi-validation.pipe';
+import { userCreateSchema } from './schemas/user-create.schema';
 
 @ApiTags('User')
 @Controller('user')
@@ -10,6 +12,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
+  @UsePipes(new JoiValidationPipe(userCreateSchema))
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }
