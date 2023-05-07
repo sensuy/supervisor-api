@@ -15,6 +15,6 @@ export default new DataSource({
   logging: false,
   synchronize: false,
   name: 'default',
-  entities: ['./dist/modules/**/**/repositories/typeorm/*{.ts,.js}'],
-  migrations: ['./dist/shared/migrations/*{.ts,.js}']
+  entities: ['./dist/src/modules/**/**/repositories/typeorm/*{.ts,.js}'],
+  migrations: ['./dist/src/shared/migrations/*{.ts,.js}']
 });
