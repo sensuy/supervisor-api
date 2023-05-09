@@ -1,6 +1,6 @@
+import { UserInterface } from "@users/interfaces";
 import { CommonEntity } from "src/shared/common.entity";
 import { Column, Entity } from "typeorm";
-import { UserInterface } from "../../interfaces/user.interface";
 
 @Entity('user')
 export class User extends CommonEntity implements UserInterface {

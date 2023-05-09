@@ -19,7 +19,7 @@ export class CreateUserDto extends IntersectionType(
     minLength: USER_PASSWORD_MIN_LENGTH,
     example: 'Password123@',
   })
-  password: string;
+  password!: string;
 }
 
 

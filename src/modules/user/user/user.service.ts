@@ -1,11 +1,25 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto, CreateUserResponseDto } from './dto/create-user.dto';
-import { UserServiceInterface } from './interfaces';
+import { IUserRepository, IUserService } from './interfaces';
+import { IUSER_REPOSITORY } from './constants/user-layers.constants';
+
 
 @Injectable()
-export class UserService implements UserServiceInterface {
-  create(createUserDto: CreateUserDto): Promise<CreateUserResponseDto> {
-    return Promise.resolve({} as any);
+export class UserService implements IUserService {
+
+  constructor(
+    @Inject(IUSER_REPOSITORY) private readonly userRepository: IUserRepository
+  ) { }
+ 
+  async create(createUserDto: CreateUserDto): Promise<CreateUserResponseDto> {
+    console.log('createUserDtodfas', createUserDto);
+    
+    const user = await this.userRepository.create(createUserDto);
+    user.active = true;
+    user.salt = 'salt';
+    const { email, username } = await this.userRepository.save(user); 
+    const response:  CreateUserResponseDto = { email, username }
+    return response;
   }
 
 }
