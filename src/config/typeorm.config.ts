@@ -17,7 +17,7 @@ export class TypeOrmConfig implements TypeOrmOptionsFactory {
 			password: process.env.DATABASE_PASSWORD,
 			entities: ['./dist/src/modules/**/**/repositories/typeorm/entities/*{.ts,.js}'],
 			migrations: ['dist/src/shared/migrations/*{.ts,.js}'],
-			logging: ['error', 'info'],
+			logging: ['error', 'warn'],
 			synchronize: false
 		};
 	}
