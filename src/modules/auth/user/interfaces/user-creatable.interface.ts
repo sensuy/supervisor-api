@@ -1,8 +1,9 @@
-import { UserInterface } from "./user.interface";
+import { IUser } from "./user.interface";
+
 
 export interface UserCreatableInterface 
 extends Pick<
-UserInterface, 
+IUser, 
 'username' | 'email' | 'password'
 >,
-Partial<Pick<UserInterface, 'active'>> {}
+Partial<Pick<IUser, 'active'>> {}

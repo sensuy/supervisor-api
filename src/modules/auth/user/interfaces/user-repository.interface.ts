@@ -1,9 +1,9 @@
-import { CreateUserDto, CreateUserResponseDto } from "../dto/create-user.dto";
-import { User } from "../repositories/typeorm/entities/user";
+import { CreateUserDto } from "../dto/create-user.dto";
+import { IUser } from "./user.interface";
 
 
 export interface IUserRepository {
-  create(createUserDto: CreateUserDto): Promise<User>;
-  save(user: User): Promise<User>;
-  findByEmail(email: string): Promise<User>;
+  create(createUserDto: CreateUserDto): Promise<IUser>;
+  save(user: IUser): Promise<IUser>;
+  findByEmail(email: string): Promise<IUser>;
 }

@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { CommonEntityDto } from "@shared/dto";
-import { UserInterface } from "../interfaces";
+import { IUser } from "../interfaces";
 import {
   USER_EMAIL_MAX_LENGTH,
   USER_EMAIL_MIN_LENGTH,
@@ -11,7 +11,7 @@ import {
 
 export class UserDto
   extends CommonEntityDto
-  implements Omit<UserInterface, 'password' | 'salt'>
+  implements Omit<IUser, 'password' | 'salt'>
 {
   @ApiProperty({
     title: 'Username',

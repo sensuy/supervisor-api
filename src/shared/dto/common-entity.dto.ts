@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { CommonEntityInterface } from "../interfaces";
+import { ICommonEntity } from "@shared/interfaces";
 
 
-export class CommonEntityDto implements CommonEntityInterface {
+export class CommonEntityDto implements ICommonEntity {
   @ApiProperty({
     type: 'string',
     format: 'uuid',

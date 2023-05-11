@@ -3,9 +3,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { CommonEntityInterface } from './interfaces/common-entity.interface';
+import { ICommonEntity } from './interfaces';
 
-export abstract class CommonEntity implements CommonEntityInterface {
+export abstract class CommonEntity implements ICommonEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
