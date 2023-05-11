@@ -5,11 +5,9 @@ export default {
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: "coverage",
-  // coveragePathIgnorePatterns: [
-  //   '/src/config/',
-  // ],
+  coveragePathIgnorePatterns: [],
   collectCoverageFrom: [
-    "./src/**/*.(service|controller|middleware).(t|s)s",
+    "src/**/*.(t|j)s",
   ],
   coverageProvider: "v8",
   coverageReporters: ["html"],

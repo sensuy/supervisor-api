@@ -1,9 +1,9 @@
-import { UserInterface } from "@users/interfaces";
-import { CommonEntity } from "src/shared/common.entity";
 import { Column, Entity } from "typeorm";
+import { CommonEntity } from "@shared/common.entity";
+import { UserInterface } from "@users/interfaces";
 
 @Entity('user')
-export class User extends CommonEntity implements UserInterface {
+export class User extends CommonEntity implements UserInterface { 
   @Column({ type: 'text', nullable: false })
   username: string;
   @Column({ type: 'text', nullable: false })
