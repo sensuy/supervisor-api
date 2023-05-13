@@ -4,7 +4,7 @@ import { UserController } from './user/user.controller';
 import { UserService } from './user/user.service';
 import { UserRepository } from './user/repositories/typeorm/user.repository';
 import { IUSER_REPOSITORY, IUSER_SERVICE } from './user/constants/user-layers.constants';
-import { User } from './user/repositories/typeorm/entities/user';
+import { User } from '@users/repositories/typeorm/user.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User])],
