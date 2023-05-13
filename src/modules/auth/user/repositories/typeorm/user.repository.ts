@@ -2,7 +2,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { CreateUserDto } from "../../dto/create-user.dto";
 import { IUserRepository } from "../../interfaces";
-import { User } from "./entities/user";
+import { User } from "./user.entity";
 
 export class UserRepository implements IUserRepository {
   constructor(

@@ -1,8 +1,7 @@
-import { ConflictException, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto, CreateUserResponseDto } from './dto/create-user.dto';
 import { IUserRepository, IUserService } from './interfaces';
 import { IUSER_REPOSITORY } from './constants/user-layers.constants';
-import { find } from 'rxjs';
 
 
 @Injectable()

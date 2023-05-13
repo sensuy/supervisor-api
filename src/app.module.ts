@@ -14,5 +14,6 @@ import { UserModule } from './modules/auth/user.module';
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfig }),
     UserModule
   ],
+  providers: [],
 })
 export class AppModule { }
