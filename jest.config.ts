@@ -5,7 +5,12 @@ export default {
   clearMocks: true,
   collectCoverage: true,
   coverageDirectory: "coverage",
-  coveragePathIgnorePatterns: [],
+  coveragePathIgnorePatterns: [
+    'src/main.ts',
+    'src/config/*',
+    '/src/.*\\.module\\.ts$',
+    '/src/shared/migrations/*',
+  ],
   collectCoverageFrom: [
     "src/**/*.(t|j)s",
   ],
