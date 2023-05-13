@@ -29,6 +29,8 @@ export default {
   roots: [
     "<rootDir>"
   ],
+  setupFil: ["<rootDir>/.env.test"],
+  
   testEnvironment: "node",
   testPathIgnorePatterns: [
     '/node_modules/',
