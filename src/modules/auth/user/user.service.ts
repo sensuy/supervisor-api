@@ -12,7 +12,6 @@ export class UserService implements IUserService {
   ) { }
  
   async create(createUserDto: CreateUserDto): Promise<CreateUserResponseDto> {
-    console.log('createUserDtodfas', createUserDto);
     const userExists = await this.userRepository.findByEmail(createUserDto.email);
     
     if (userExists) {

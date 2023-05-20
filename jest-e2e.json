@@ -1,5 +1,4 @@
-{
-    
+{   
   "moduleFileExtensions": ["js", "json", "ts"],
   "rootDir": ".",
   "testEnvironment": "node",
@@ -8,8 +7,8 @@
     "^.+\\.(t|j)s$": "ts-jest"
   },
   "moduleNameMapper": {
-    "^@shared/(.*)$": "<rootDir>/../src/shared/$1",
-    "@users/(.*)$": "<rootDir>/../src/modules/auth/user/$1"
+    "^@shared/(.*)$": "<rootDir>/src/shared/$1",
+    "@users/(.*)$": "<rootDir>/src/modules/auth/user/$1"
   }
   
 }

@@ -9,13 +9,19 @@ export default {
     'src/main.ts',
     'src/config/*',
     '/src/.*\\.module\\.ts$',
-    '/src/shared/migrations/*',
+    '/src/.*\\.e2e-spec\\.ts$',
+    // '/src/shared/migrations/*',
+    // '/src/shared/interfaces/*',
+    // '/src/shared/common.entity.ts',
+    // '/src/shared/constants.ts',
+    // '/src/modules/auth/user/interfaces/*',
+    // '/src/modules/auth/user/repositories/*'
   ],
   collectCoverageFrom: [
     "src/**/*.(t|j)s",
   ],
   coverageProvider: "v8",
-  coverageReporters: ["html"],
+  coverageReporters: ["lcov"],
   moduleFileExtensions: [
     "js",
     "json",
@@ -29,8 +35,6 @@ export default {
   roots: [
     "<rootDir>"
   ],
-  setupFil: ["<rootDir>/.env.test"],
-  
   testEnvironment: "node",
   testPathIgnorePatterns: [
     '/node_modules/',

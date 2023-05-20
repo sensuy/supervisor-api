@@ -49,7 +49,7 @@ describe('UserService', () => {
       const testUserDto: CreateUserDto = { email: 'test@test.com', username: 'test', password: 'password' };
       mockRepository.findByEmail = jest.fn().mockResolvedValueOnce(testUserDto);
       
-      await expect(service.create(testUserDto)).rejects.toThrow(ConflictException);
+      await expect(service.create(testUserDto)).rejects.toThrow('dfghj');
     });
 
     
