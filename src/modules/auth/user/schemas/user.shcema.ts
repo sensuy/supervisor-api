@@ -1,10 +1,10 @@
 import * as Joi from 'joi';
-import { 
-  USER_EMAIL_MAX_LENGTH, 
-  USER_EMAIL_MIN_LENGTH, 
-  USER_NAME_MAX_LENGTH, 
-  USER_NAME_MIN_LENGTH, 
-  USER_PASSWORD_MIN_LENGTH 
+import {
+  USER_EMAIL_MAX_LENGTH,
+  USER_EMAIL_MIN_LENGTH,
+  USER_NAME_MAX_LENGTH,
+  USER_NAME_MIN_LENGTH,
+  USER_PASSWORD_MIN_LENGTH
 } from '../constants/user.constants';
 
 
@@ -21,23 +21,18 @@ export const username = Joi
     'any.required': 'username is a required field'
   });
 
-  export const email = Joi.string()
+export const email = Joi.string()
   .email()
   .required()
-  .min(USER_EMAIL_MIN_LENGTH)
-  .max(USER_EMAIL_MAX_LENGTH)
   .messages({
     'string.base': 'Email must be a string',
     'string.empty': 'Email cannot be an empty field',
     'string.email': 'Email must be a valid email address',
-    'any.required': 'Email is a required field',
-    'string.max': `Email cannot be more than ${USER_EMAIL_MAX_LENGTH} characters`,
-    'string.min': `Email cannot be less than ${USER_EMAIL_MIN_LENGTH} characters`
+    'any.required': 'Email is a required field'
   });
 
 
-  export const password = Joi.string()
-  .min(USER_PASSWORD_MIN_LENGTH)
+export const password = Joi.string().min(USER_PASSWORD_MIN_LENGTH)
   .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])'))
   .required()
   .messages({

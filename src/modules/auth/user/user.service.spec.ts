@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
-import { IUSER_REPOSITORY, IUSER_SERVICE } from './constants/user-layers.constants';
+import { IUSER_REPOSITORY } from './constants/user-layers.constants';
 import { CreateUserDto, CreateUserResponseDto } from './dto/create-user.dto';
 import { IUserRepository } from './interfaces';
 import { ConflictException } from '@nestjs/common';
@@ -49,7 +49,7 @@ describe('UserService', () => {
       const testUserDto: CreateUserDto = { email: 'test@test.com', username: 'test', password: 'password' };
       mockRepository.findByEmail = jest.fn().mockResolvedValueOnce(testUserDto);
       
-      await expect(service.create(testUserDto)).rejects.toThrow('dfghj');
+      await expect(service.create(testUserDto)).rejects.toThrow(ConflictException);
     });
 
     

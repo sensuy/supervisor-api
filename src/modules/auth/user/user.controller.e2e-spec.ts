@@ -50,8 +50,7 @@ describe('UserModule (e2e)', () => {
         });
 
       expect(response.status).toBe(201);
-      expect(response.body).toHaveProperty('email');
-      expect(response.body).toHaveProperty('username');
+      expect(response.body).toMatchObject({username: 'test', email: 'asdf@sadf.com'});
     });
 
     it('Should trhow a errro if a user email is already registered', async () => {

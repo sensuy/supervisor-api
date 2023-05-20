@@ -1,8 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, Inject } from '@nestjs/common';
+import { Controller, Post, Body, UsePipes, Inject } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { UserService } from './user.service';
 import { CreateUserDto, CreateUserResponseDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { JoiValidationPipe } from '@shared/pipes/joi-validation.pipe';
 import { userCreateSchema } from './schemas/user-create.schema';
 import { IUserService } from './interfaces';
@@ -26,7 +24,7 @@ export class UserController {
     type: CreateUserResponseDto,
   })
   @UsePipes(new JoiValidationPipe(userCreateSchema))
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body() createUserDto: CreateUserDto): Promise<CreateUserResponseDto> {
     return this.userService.create(createUserDto);
   }
 }
