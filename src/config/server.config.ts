@@ -1,5 +1,5 @@
 import { registerAs } from '@nestjs/config';
-import { SERVER_CONFIG } from 'src/shared/constants';
+import { SERVER_CONFIG } from '../shared/constants';
 import { ServerConfigInterface } from '../shared/interfaces';
 
 export const serverConfig = registerAs(

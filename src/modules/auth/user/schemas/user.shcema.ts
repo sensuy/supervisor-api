@@ -25,10 +25,10 @@ export const email = Joi.string()
   .email()
   .required()
   .messages({
-    'string.base': 'Email must be a string',
-    'string.empty': 'Email cannot be an empty field',
-    'string.email': 'Email must be a valid email address',
-    'any.required': 'Email is a required field'
+    'string.base': 'email must be a string',
+    'string.empty': 'email cannot be an empty field',
+    'string.email': 'email must be a valid email address',
+    'any.required': 'email is a required field'
   });
 
 
@@ -36,9 +36,9 @@ export const password = Joi.string().min(USER_PASSWORD_MIN_LENGTH)
   .pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])'))
   .required()
   .messages({
-    'string.base': 'Password must be a string',
-    'string.empty': 'Password cannot be an empty field',
-    'string.pattern.base': 'Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character',
-    'any.required': 'Password is a required field',
-    'string.min': `Password must be at least ${USER_PASSWORD_MIN_LENGTH} characters`,
+    'string.base': 'password must be a string',
+    'string.empty': 'password cannot be an empty field',
+    'string.pattern.base': 'password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character',
+    'any.required': 'password is a required field',
+    'string.min': `password must be at least ${USER_PASSWORD_MIN_LENGTH} characters`,
   });

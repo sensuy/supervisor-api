@@ -10,12 +10,11 @@ export default {
     'src/config/*',
     '/src/.*\\.module\\.ts$',
     '/src/.*\\.e2e-spec\\.ts$',
-    // '/src/shared/migrations/*',
-    // '/src/shared/interfaces/*',
-    // '/src/shared/common.entity.ts',
-    // '/src/shared/constants.ts',
-    // '/src/modules/auth/user/interfaces/*',
-    // '/src/modules/auth/user/repositories/*'
+    '.*interfaces.*',
+    '.*repositories.*',
+    '/src/shared/migrations/*',
+    '/src/shared/common.entity.ts',
+    '/src/shared/constants.ts'
   ],
   collectCoverageFrom: [
     "src/**/*.(t|j)s",

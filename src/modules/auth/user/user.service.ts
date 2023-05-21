@@ -15,7 +15,7 @@ export class UserService implements IUserService {
     const userExists = await this.userRepository.findByEmail(createUserDto.email);
     
     if (userExists) {
-      throw new ConflictException('Email is already registered');
+      throw new ConflictException('The email has already been registered');
     }
 
     const user = await this.userRepository.create(createUserDto);
