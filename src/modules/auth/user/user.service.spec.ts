@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
-import { IUSER_REPOSITORY, IUSER_SERVICE } from './constants/user-layers.constants';
+import { IUSER_REPOSITORY } from './constants/user-layers.constants';
 import { CreateUserDto, CreateUserResponseDto } from './dto/create-user.dto';
 import { IUserRepository } from './interfaces';
 import { ConflictException } from '@nestjs/common';

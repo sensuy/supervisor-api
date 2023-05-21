@@ -17,6 +17,5 @@ else
     npm run migration:run
     sleep 3
 fi
-echo "Starting server..."
 sleep 3
 npm run start:dev
