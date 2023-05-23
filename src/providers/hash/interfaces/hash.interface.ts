@@ -1,5 +1,5 @@
 export interface IHashProvider {
-    createSalt(): Promise<string>;
-    encrypt(data: string): Promise<string>;
-    verify(data: string, encrypted: string): Promise<boolean>;
+  generateSalt(): Promise<string>;
+    hash(password: string, salt: string): Promise<string>;
+    verify(password: string, hashedPassword: string, salt: string): Promise<boolean>;
 }

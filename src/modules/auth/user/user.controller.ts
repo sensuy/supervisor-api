@@ -1,5 +1,5 @@
 import { Controller, Post, Body, UsePipes, Inject } from '@nestjs/common';
-import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiConflictResponse, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto, CreateUserResponseDto } from './dto/create-user.dto';
 import { JoiValidationPipe } from '@shared/pipes/joi-validation.pipe';
 import { userCreateSchema } from './schemas/user-create.schema';
@@ -22,6 +22,9 @@ export class UserController {
   @ApiCreatedResponse({
     description: 'The user has been successfully created.',
     type: CreateUserResponseDto,
+  })
+  @ApiConflictResponse({
+    description: 'The email has already been registered',
   })
   @UsePipes(new JoiValidationPipe(userCreateSchema))
   create(@Body() createUserDto: CreateUserDto): Promise<CreateUserResponseDto> {
