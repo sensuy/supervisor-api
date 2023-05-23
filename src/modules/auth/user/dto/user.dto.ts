@@ -5,7 +5,8 @@ import {
   USER_EMAIL_MAX_LENGTH,
   USER_EMAIL_MIN_LENGTH,
   USER_NAME_MAX_LENGTH,
-  USER_NAME_MIN_LENGTH
+  USER_NAME_MIN_LENGTH,
+  USER_PASSWORD_MIN_LENGTH
 } from "../constants/user.constants";
 
 
@@ -30,6 +31,15 @@ export class UserDto
     example: 'johndoe@test.com'
   })
   email: string;
+
+  @ApiProperty({
+    title: 'Password',
+    description:
+      'A Strong password that must contain at least one number, one capital letter and one lowercase letter',
+    minLength: USER_PASSWORD_MIN_LENGTH,
+    example: 'Password123@',
+  })
+  password: string;
 
   @ApiProperty({
     title: 'Active',
