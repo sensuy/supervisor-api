@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfig } from './config/typeorm.config';
 import { UserModule } from './modules/auth/user.module';
+import { ProviderModule } from './providers/provider.module';
 
 
 @Module({
@@ -12,6 +13,7 @@ import { UserModule } from './modules/auth/user.module';
       load: [],
     }),
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfig }),
+    ProviderModule,
     UserModule
   ],
   providers: [],

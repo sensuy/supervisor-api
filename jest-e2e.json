@@ -8,7 +8,9 @@
   },
   "moduleNameMapper": {
     "^@shared/(.*)$": "<rootDir>/src/shared/$1",
-    "@users/(.*)$": "<rootDir>/src/modules/auth/user/$1"
+    "@modules/(.*)$": "<rootDir>/src/modules/$1",
+    "@config/(.*)$": "<rootDir>/src/config/$1",
+    "@providers/(.*)$": "<rootDir>/src/providers/$1"
   }
   
 }

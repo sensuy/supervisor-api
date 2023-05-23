@@ -4,11 +4,14 @@ import { IUSER_REPOSITORY } from './constants/user-layers.constants';
 import { CreateUserDto, CreateUserResponseDto } from './dto/create-user.dto';
 import { IUserRepository } from './interfaces';
 import { ConflictException } from '@nestjs/common';
+import { HASH_PROVIDER } from '@shared/constants';
+import { IHashProvider } from '@providers/hash/interfaces/hash.interface';
 
 describe('UserService', () => {
 
   let service: UserService;
   let mockRepository: IUserRepository;
+  let mockHashProvider: IHashProvider;
 
   beforeEach(async () => {
     mockRepository = {
@@ -16,11 +19,22 @@ describe('UserService', () => {
       create: jest.fn(),
       save: jest.fn(),
     };
+
+    mockHashProvider = {
+      generateSalt: jest.fn(),
+      hash: jest.fn(),
+      verify: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [UserService,
         {
           provide: IUSER_REPOSITORY,
           useValue: mockRepository
+        },
+        {
+          provide: HASH_PROVIDER,
+          useValue: mockHashProvider
         }
       ],
     }).compile();
@@ -48,10 +62,10 @@ describe('UserService', () => {
     it('should throw a ConflictException if user already exists', async () => {
       const testUserDto: CreateUserDto = { email: 'test@test.com', username: 'test', password: 'password' };
       mockRepository.findByEmail = jest.fn().mockResolvedValueOnce(testUserDto);
-      
+
       await expect(service.create(testUserDto)).rejects.toThrow(ConflictException);
     });
 
-    
+
   });
 });
