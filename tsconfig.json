@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "resolveJsonModule": true,
+    "resolveJsonModule": true, 
     "esModuleInterop": false,
     "declaration": true,
     "removeComments": true,
@@ -21,7 +21,9 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@shared/*": ["src/shared/*"],
-      "@users/*": ["src/modules/auth/user/*"]
+      "@modules/*": ["src/modules/*"],
+      "@config/*": ["src/config/*"],
+      "@providers/*": ["src/providers/*"]
     }
   }
 }

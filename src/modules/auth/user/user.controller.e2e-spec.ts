@@ -2,10 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
-import { User } from '@users/repositories/typeorm/user.entity';
 import { Repository } from 'typeorm';
 import { UserModule } from '../user.module';
 import { CreateUserDto } from './dto/create-user.dto';
+import { User } from './repositories/typeorm/user.entity';
+import { HASH_PROVIDER } from '@shared/constants';
+import { BcryptService } from '@providers/hash/services/bcrypt.service';
+import { ProviderModule } from '@providers/provider.module';
 
 describe('UserModule (e2e)', () => {
   let app: INestApplication;
@@ -33,7 +36,8 @@ describe('UserModule (e2e)', () => {
           entities: [User],
           synchronize: false,
         }),
-      ],
+        
+      ]
     }).compile();
 
     userRepository = moduleFixture.get(getRepositoryToken(User));

@@ -19,7 +19,7 @@ describe('BcryptService', () => {
 
   it('Should be able to create a salt', async () => {
     let salt: string = null;
-    salt = await service.createSalt();
+    salt = await service.generateSalt();
 
     expect(salt).not.toBeNull();
     expect(salt.length).toBeGreaterThan(0);
@@ -29,7 +29,7 @@ describe('BcryptService', () => {
   it('Should be able to hash a password', async () => {
     let salt: string = null;
     let hash: string = null;
-    salt = await service.createSalt();
+    salt = await service.generateSalt();
     hash = await service.hash('123456', salt);
 
     expect(hash).not.toBeNull();
@@ -40,7 +40,7 @@ describe('BcryptService', () => {
   it('Should be able to verify a password', async () => {
     let salt: string = null;
     let hash: string = null;
-    salt = await service.createSalt();
+    salt = await service.generateSalt();
     hash = await service.hash('123456', salt);
     const isPasswordValid = await service.verify('123456', hash, salt);
 

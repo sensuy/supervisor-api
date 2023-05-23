@@ -2,9 +2,8 @@ import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto, CreateUserResponseDto } from './dto/create-user.dto';
 import { IUserRepository, IUserService } from './interfaces';
 import { IUSER_REPOSITORY } from './constants/user-layers.constants';
-import { In } from 'typeorm';
 import { HASH_PROVIDER } from '@shared/constants';
-import { IHashProvider } from 'src/providers/hash/interfaces/hash.interface';
+import { IHashProvider } from '@providers/hash/interfaces/hash.interface';
 
 
 @Injectable()

@@ -1,6 +1,6 @@
 import { Column, Entity } from "typeorm";
 import { CommonEntity } from "@shared/common.entity";
-import { IUser } from "@users/interfaces";
+import { IUser } from "@modules/auth/user/interfaces/user.interface";
 
 @Entity('user')
 export class User extends CommonEntity implements IUser { 
