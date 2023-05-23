@@ -3,14 +3,11 @@ import { HttpStatus, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserModule } from '../user.module';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './repositories/typeorm/user.entity';
-import { HASH_PROVIDER } from '@shared/constants';
-import { BcryptService } from '@providers/hash/services/bcrypt.service';
-import { ProviderModule } from '@providers/provider.module';
+import { AuthModule } from '../auth.module';
 
-describe('UserModule (e2e)', () => {
+describe('AuthModule (e2e)', () => {
   let app: INestApplication;
   let userRepository: Repository<User>;
 
@@ -24,7 +21,7 @@ describe('UserModule (e2e)', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
-        UserModule,
+        AuthModule,
         TypeOrmModule.forRoot({
           type: 'postgres',
           host: 'localhost',

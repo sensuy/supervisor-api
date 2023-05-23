@@ -9,7 +9,7 @@ import { BcryptService } from '@providers/hash/services/bcrypt.service';
 import { User } from './user/repositories/typeorm/user.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User])],
+  imports: [TypeOrmModule.forFeature([User]), AuthModule],
   controllers: [UserController],
   providers: [
     {
@@ -26,4 +26,4 @@ import { User } from './user/repositories/typeorm/user.entity';
     }
   ]
 })
-export class UserModule { }
+export class AuthModule { }
