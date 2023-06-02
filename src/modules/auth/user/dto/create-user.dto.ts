@@ -1,6 +1,4 @@
-
 import {
-  ApiProperty,
   IntersectionType,
   OmitType,
   PickType
