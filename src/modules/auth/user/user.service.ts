@@ -1,13 +1,11 @@
-import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto, CreateUserResponseDto } from './dto/create-user.dto';
 import { IUserRepository, IUserService } from './interfaces';
 import { IUSER_REPOSITORY } from './constants/user-layers.constants';
 import { HASH_PROVIDER } from '@shared/constants';
 import { IHashProvider } from '@providers/hash/interfaces/hash.interface';
-import { use } from 'passport';
-import { Not } from 'typeorm';
-import { NotFoundError } from 'rxjs';
-import { UserLoginDto } from '../auth/dto/user-login.dto';
+import { UserLoginDto } from './dto/user-login.dto';
+import { User } from './repositories/typeorm/user.entity';
 
 
 @Injectable()
@@ -36,14 +34,21 @@ export class UserService implements IUserService {
   }
 
 
-  async validateUserLogin(user: UserLoginDto): Promise<boolean> {
+  async validateUserLogin(loginData: UserLoginDto): Promise<User> {
+    const { email, password } = loginData;
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException('Email not registrated');
     }
 
-    return await this.hashProvider.verify(password, user.password, user.salt);
+   const valid = this.hashProvider.verify(password, user.password, user.salt);
+   
+   if (!valid) {
+      throw new UnauthorizedException('Email or password invalid'); 
+   }
+
+    return user; 
   }
 
 }

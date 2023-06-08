@@ -1,4 +1,5 @@
+import { User } from "@modules/auth/user/repositories/typeorm/user.entity";
 
 export interface IAuthService {
-  validateUser(username: string, password: string): any;
+  validateUser(email: string, password: string): Promise<User>;
 }
