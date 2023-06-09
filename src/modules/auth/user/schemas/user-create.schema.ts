@@ -9,4 +9,4 @@ export const userCreateSchema = Joi.object({
   username,
   email,
   password
-});
+});  

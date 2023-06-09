@@ -9,19 +9,33 @@ import { User } from './user/repositories/typeorm/user.entity';
 import { UserController } from './user/user.controller';
 import { UserRepository } from './user/repositories/typeorm/user.repository';
 import { UserService } from './user/user.service';
-import { LocalStrategy } from './auth/local-strategy';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth/auth.service';
 import { IAUTH_SERVICE } from './auth/constants/auth.constants';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConfig } from '@config/jwt.config';
+import { ConfigType } from '@nestjs/config';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { LocalAuthGuard } from './auth/guards/local-auth.guard';
+import { LocalStrategy } from './auth/local-strategy';
+import { JwtStrategy } from './auth/jwt-strategy';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User]), PassportModule],
-  controllers: [UserController, AuthController],
+  imports: [
+    TypeOrmModule.forFeature([User]),
+    JwtModule.registerAsync({
+      inject: [jwtConfig.KEY],
+      useFactory: async (config: ConfigType<typeof jwtConfig>) => config,
+    }),
+  ],
   providers: [
-    LocalStrategy,
     {
       provide: IUSER_SERVICE,
       useClass: UserService
+    },
+    {
+      provide: IAUTH_SERVICE,
+      useClass: AuthService
     },
     {
       provide: IUSER_REPOSITORY,
@@ -31,10 +45,9 @@ import { IAUTH_SERVICE } from './auth/constants/auth.constants';
       provide: HASH_PROVIDER,
       useClass: BcryptService
     },
-    {
-      provide: IAUTH_SERVICE,
-      useClass: AuthService
-    }
-  ]
+    LocalStrategy,
+    JwtStrategy
+  ],
+  controllers: [UserController, AuthController],
 })
 export class AuthModule { }

@@ -51,4 +51,14 @@ export class UserService implements IUserService {
     return user; 
   }
 
+  async findById(id: string): Promise<User> {
+    const user = await this.userRepository.findById(id);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;
+  }
+
 }

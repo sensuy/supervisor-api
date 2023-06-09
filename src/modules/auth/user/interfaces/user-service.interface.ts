@@ -6,4 +6,5 @@ import { User } from "../repositories/typeorm/user.entity";
 export interface IUserService {
   create(createUserDto: CreateUserDto): Promise<CreateUserResponseDto>;
   validateUserLogin(loginData: UserLoginDto): Promise<User>;
+  findById(id: string): Promise<User>;
 }
