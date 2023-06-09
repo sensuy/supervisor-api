@@ -18,6 +18,7 @@ describe('UserService', () => {
       findByEmail: jest.fn(),
       create: jest.fn(),
       save: jest.fn(),
+      findById: jest.fn(),
     };
 
     mockHashProvider = {
