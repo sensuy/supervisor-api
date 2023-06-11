@@ -5,6 +5,7 @@ import { JoiValidationPipe } from '@shared/pipes/joi-validation.pipe';
 import { userCreateSchema } from './schemas/user-create.schema';
 import { IUserService } from './interfaces';
 import { IUSER_SERVICE } from './constants/user-layers.constants';
+import { BadRequestDto, ConflictDto } from '@shared/errors';
 
 @ApiTags('User')
 @Controller('user')
@@ -25,9 +26,11 @@ export class UserController {
   })
   @ApiBadRequestResponse({
     description: 'Validations error',
+    type: BadRequestDto,
   })
   @ApiConflictResponse({
     description: 'The email has already been registered',
+    type: ConflictDto,
   })
   @UsePipes(new JoiValidationPipe(userCreateSchema))
   create(@Body() createUserDto: CreateUserDto): Promise<CreateUserResponseDto> {

@@ -18,6 +18,9 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { ProfileResponseDto } from './dto/profile-response.dto';
 import { IUser } from '@shared/interfaces';
 import { UserLoginDto } from './dto/user-login.dto';
+import { RefreshResponseDto } from './dto/refresh-response.dto';
+import { NotFoundDto, UnauthorizedDto } from '@shared/errors';
+import { Not } from 'typeorm';
 
 
 @ApiTags('Auth')
@@ -41,18 +44,37 @@ export class AuthController {
   })
   @ApiUnauthorizedResponse({
     description: 'Email or password invalid',
+    type: UnauthorizedDto,
   })
   @ApiNotFoundResponse({
     description: 'email was not registered',
+    type: NotFoundDto,
   })
   @UseGuards(LocalAuthGuard)
   @HttpCode(200)
   async login(@AuthUser() user: IUser): Promise<AuthResponseDto> {
     return this.authService.jwtSign(user);
   }
-
+  
   @Post('/refresh')
-  refresh(@Body() authRefreshDto: any): Promise<AuthResponseDto> {
+  @ApiOperation({
+    summary: 'Refresh a user token',
+    description: 'Verify if the refresh token is valid and return a new access token'
+  })
+  @ApiBody({ type: UserLoginDto })
+  @ApiOkResponse({
+    description: 'The user has been successfully logged in.',
+    type: RefreshResponseDto,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Refresh token expired or invalid',
+    type: UnauthorizedDto,
+  })
+  @ApiNotFoundResponse({
+    description: 'User not found',
+    type: NotFoundDto,
+  })
+  refresh(@Body() authRefreshDto: string): Promise<AuthResponseDto> {
     return this.authService.jwtRefresh(authRefreshDto);
   }
 
