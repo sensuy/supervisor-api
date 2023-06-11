@@ -42,13 +42,13 @@ export class UserService implements IUserService {
 
   async validateUserLogin(email: string, password: string): Promise<IUser> {
     const user = await this.userRepository.findByEmail(email);
-
+    
     if (!user) {
-      throw new NotFoundException('Email not registrated');
+      throw new NotFoundException('email was not registered');
     }
 
-    const valid = this.hashProvider.verify(password, user.password, user.salt);
-
+    const valid = await this.hashProvider.verify(password, user.password, user.salt);
+    
     if (!valid) {
       throw new UnauthorizedException('Email or password invalid');
     }

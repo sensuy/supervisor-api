@@ -8,7 +8,7 @@ import { jwtConfig } from "@config/jwt.config";
 import { ConfigType } from "@nestjs/config";
 import { AuthResponseDto } from "./dto/auth-response.dto";
 import { JwtPayload } from "./interfaces/jwt-payload.interface";
-import e from "express";
+import { IUser } from "@shared/interfaces";
 
 @Injectable()
 export class AuthService implements IAuthService {
@@ -25,7 +25,7 @@ export class AuthService implements IAuthService {
     return this.userService.validateUserLogin(email, password);
   }
 
-  async jwtSign(user: User): Promise<AuthResponseDto> {
+  async jwtSign(user: IUser): Promise<AuthResponseDto> {
     const accessConfig = this.config.access;
     const refreshConfig = this.config.refresh;
 
