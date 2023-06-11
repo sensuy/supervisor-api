@@ -1,8 +1,6 @@
 import * as Joi from 'joi';
-import {
-  USER_NAME_MAX_LENGTH,
-  USER_NAME_MIN_LENGTH,
-} from '../constants/user.constants';
+import { USER_NAME_MAX_LENGTH, USER_NAME_MIN_LENGTH } from '@shared/constants';
+
 
 export const username = Joi
   .string()

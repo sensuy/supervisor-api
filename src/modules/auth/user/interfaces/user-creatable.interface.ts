@@ -1,4 +1,5 @@
-import { IUser } from "./user.interface";
+import { IUser } from "@shared/interfaces";
+
 
 
 export interface IUserCreatable

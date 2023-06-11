@@ -6,7 +6,6 @@ import { IAUTH_SERVICE } from './constants/auth.constants';
 import { IAuthService } from './interfaces/auth-service.interface';
 import { User } from '../user/repositories/typeorm/user.entity';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { UserDto } from '../user/dto/user.dto';
 import { ProfileResponseDto } from './dto/profile-response.dto';
 import { AuthResponseDto } from './dto/auth-response.dto';
 

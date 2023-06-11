@@ -2,13 +2,14 @@ import { ApiProperty } from "@nestjs/swagger";
 
 import { CommonEntityDto } from "@shared/dto";
 import { IUser } from "../interfaces";
-import {
-  USER_EMAIL_MAX_LENGTH,
-  USER_EMAIL_MIN_LENGTH,
-  USER_NAME_MAX_LENGTH,
-  USER_NAME_MIN_LENGTH
-} from "../constants/user.constants";
-import { PASSWORD_MIN_LENGTH } from "@shared/constants";
+
+import { 
+  PASSWORD_MIN_LENGTH, 
+  USER_EMAIL_MAX_LENGTH, 
+  USER_EMAIL_MIN_LENGTH, 
+  USER_NAME_MAX_LENGTH, 
+  USER_NAME_MIN_LENGTH 
+} from "@shared/constants";
 
 
 export class UserDto

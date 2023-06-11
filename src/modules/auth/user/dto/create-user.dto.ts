@@ -3,8 +3,8 @@ import {
   OmitType,
   PickType
 } from "@nestjs/swagger";
-import { UserDto } from "./user.dto";
 import { IUserCreatable } from "../interfaces";
+import { UserDto } from "@shared/dto";
 
 export class CreateUserDto extends IntersectionType(
   PickType(UserDto, ['username', 'email', 'password']),

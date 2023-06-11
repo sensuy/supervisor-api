@@ -22,7 +22,7 @@ export class AuthService implements IAuthService {
   ) { }
 
   validateUser(email: string, password: string): Promise<User> {
-    return this.userService.validateUserLogin({ email, password });
+    return this.userService.validateUserLogin(email, password);
   }
 
   async jwtSign(user: User): Promise<AuthResponseDto> {

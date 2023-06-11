@@ -1,5 +1,5 @@
+import { IUser } from "@shared/interfaces";
 import { CreateUserDto } from "../dto/create-user.dto";
-import { IUser } from "./user.interface";
 
 
 export interface IUserRepository {

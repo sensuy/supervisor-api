@@ -1,6 +1,7 @@
 import { IntersectionType, PickType } from "@nestjs/swagger";
 import { IUserLogin } from "../interfaces/user-login.interface";
-import { UserDto } from "@modules/auth/user/dto/user.dto";
+import { UserDto } from "@shared/dto";
+
 
 
 export class UserLoginDto extends IntersectionType(
