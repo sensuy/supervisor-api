@@ -14,11 +14,11 @@ import { PassportModule } from '@nestjs/passport';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: [`.env.${process.env.NODE_ENV}`],
       load: [jwtConfig],
     }),
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfig }),
-    PassportModule,
-    ProviderModule, 
+    ProviderModule,
     AuthModule
   ],
   providers: [],

@@ -23,6 +23,7 @@ import { JwtStrategy } from './auth/jwt-strategy';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
+    PassportModule,
     JwtModule.registerAsync({
       inject: [jwtConfig.KEY],
       useFactory: async (config: ConfigType<typeof jwtConfig>) => config,
