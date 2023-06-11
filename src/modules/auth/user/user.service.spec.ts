@@ -28,7 +28,8 @@ describe('UserService', () => {
     };
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [UserService,
+      providers: [
+        UserService,
         {
           provide: IUSER_REPOSITORY,
           useValue: mockRepository
