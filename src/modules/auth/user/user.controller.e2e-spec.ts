@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
+import {  getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './repositories/typeorm/user.entity';
-import { AuthModule } from '../auth.module';
+import { AppModule } from '../../../app.module';
 
 describe('AuthModule (e2e)', () => {
   let app: INestApplication;
@@ -20,21 +20,7 @@ describe('AuthModule (e2e)', () => {
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [
-        AuthModule,
-        TypeOrmModule.forRoot({
-          type: 'postgres',
-          host: 'localhost',
-          port: 5432,
-          username: 'postgres',
-          password: 'postgres',
-          database: 'test',
-          logging: ['error', 'warn', "info"],
-          entities: [User],
-          synchronize: false,
-        }),
-        
-      ]
+      imports: [AppModule]
     }).compile();
 
     userRepository = moduleFixture.get(getRepositoryToken(User));
