@@ -1,8 +1,4 @@
+import { IUser } from "@shared/interfaces";
 
-export interface IProfileResponse {
-  id: string;
-  username: string;
-  email: string;
-  createdAt: Date;
-  active: boolean;
-}
+export interface IProfileResponse
+extends Pick<IUser, 'id' | 'username' | 'email' | 'createdAt' | 'active'> {}

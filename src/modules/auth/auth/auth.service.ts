@@ -9,6 +9,7 @@ import { ConfigType } from "@nestjs/config";
 import { AuthResponseDto } from "./dto/auth-response.dto";
 import { JwtPayload } from "./interfaces/jwt-payload.interface";
 import { IUser } from "@shared/interfaces";
+import { RefreshResponseDto } from "./dto/refresh-response.dto";
 
 @Injectable()
 export class AuthService implements IAuthService {
@@ -49,7 +50,7 @@ export class AuthService implements IAuthService {
     return tokens;
   }
 
-  async jwtRefresh(authRefreshDto: any): Promise<any> {
+  async jwtRefresh(authRefreshDto: any): Promise<RefreshResponseDto> {
     const refreshConfig = this.config.refresh;
     let verified: JwtPayload;
     try {
@@ -65,8 +66,5 @@ export class AuthService implements IAuthService {
     const user = await this.userService.findById(id);
     const { accessToken } = await this.jwtSign(user);
     return { accessToken }
-
   }
-
-
 }

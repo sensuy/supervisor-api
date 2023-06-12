@@ -1,4 +1,4 @@
+import { IAuthResponse } from "./auth-response.interface";
 
-export interface IRefreshResponse {
-  accessToken: string;
-}
+export interface IRefreshResponse
+extends Pick<IAuthResponse, 'accessToken'> {}

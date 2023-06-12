@@ -1,4 +1,4 @@
-import { ApiBody, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiHeader, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import {
   Body,
   Controller,
@@ -74,12 +74,33 @@ export class AuthController {
     description: 'User not found',
     type: NotFoundDto,
   })
-  refresh(@Body() authRefreshDto: string): Promise<AuthResponseDto> {
+  refresh(@Body() authRefreshDto: string): Promise<RefreshResponseDto> {
     return this.authService.jwtRefresh(authRefreshDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('profile')
+    @ApiOperation({
+    summary: 'Refresh a user token',
+    description: 'Verify if the refresh token is valid and return a new access token'
+  })
+  @ApiBearerAuth()
+  @ApiHeader({
+    name: 'Authorization',
+    description: 'Bearer token',
+    required: true,
+  })
+  @ApiOkResponse({
+    type: ProfileResponseDto,
+  })
+  @ApiUnauthorizedResponse({
+    description: 'Refresh token expired or invalid',
+    type: UnauthorizedDto,
+  })
+  @ApiNotFoundResponse({
+    description: 'User not found',
+    type: NotFoundDto,
+  })
+  @UseGuards(JwtAuthGuard)
   getProfile(@AuthUser() user: ProfileResponseDto) {
     return user;
   }
