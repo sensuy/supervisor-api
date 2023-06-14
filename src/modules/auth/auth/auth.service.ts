@@ -22,7 +22,7 @@ export class AuthService implements IAuthService {
     private config: ConfigType<typeof jwtConfig>
   ) { }
 
-  validateUser(email: string, password: string): Promise<User> {
+  async validateUser(email: string, password: string): Promise<User> {
     return this.userService.validateUserLogin(email, password);
   }
 
