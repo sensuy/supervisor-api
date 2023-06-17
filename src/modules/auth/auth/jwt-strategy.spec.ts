@@ -1,14 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UnauthorizedException } from '@nestjs/common';
-import { ConfigType } from '@nestjs/config';
 import { jwtConfig } from '@config/jwt.config';
-import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, ExtractJwt } from 'passport-jwt';
 
 import { IUserService } from '../user/interfaces';
 import { IUSER_SERVICE } from '../user/constants/user-layers.constants';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
-import { ProfileResponseDto } from './dto/profile-response.dto';
 import { JwtStrategy } from './jwt-strategy';
 import { IUser } from '@shared/interfaces';
 

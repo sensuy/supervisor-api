@@ -9,7 +9,7 @@ async function bootstrap() {
 
   // Register swagger for development
   swagger(app, appServerConfig.environment);
-
+  
   await app.listen(appServerConfig.port);
 }
 bootstrap();

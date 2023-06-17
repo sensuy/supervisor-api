@@ -4,6 +4,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { User } from '../user/repositories/typeorm/user.entity';
 import { IAUTH_SERVICE } from './constants/auth.constants';
 import { IAuthService } from './interfaces/auth-service.interface';
+import { UserDto } from '@shared/dto';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
@@ -16,7 +17,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(email: string, password: string): Promise<User> {
+  async validate(email: string, password: string): Promise<UserDto> {
     return this.authService.validateUser(email, password);
   }
 }
