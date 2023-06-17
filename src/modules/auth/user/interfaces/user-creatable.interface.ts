@@ -1,7 +1,8 @@
-import { IUser } from "./user.interface";
+import { IUser } from "@shared/interfaces";
 
 
-export interface UserCreatableInterface 
+
+export interface IUserCreatable
 extends Pick<
 IUser, 
 'username' | 'email' | 'password'

@@ -1,6 +1,6 @@
 import { Column, Entity } from "typeorm";
 import { CommonEntity } from "@shared/common.entity";
-import { IUser } from "@modules/auth/user/interfaces/user.interface";
+import { IUser } from "@shared/interfaces";
 
 @Entity('user')
 export class User extends CommonEntity implements IUser { 
@@ -12,6 +12,6 @@ export class User extends CommonEntity implements IUser {
   password: string;
   @Column({ type: 'text', nullable: false })
   salt: string;
-  @Column({ type: 'text', nullable: false, default: true })
+  @Column({ type: 'boolean', nullable: false, default: true })
   active: boolean;
 }
