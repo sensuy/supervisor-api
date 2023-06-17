@@ -7,7 +7,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './repositories/typeorm/user.entity';
 import { AppModule } from '../../../app.module';
 
-describe('AuthModule (e2e)', () => {
+describe('UserController (e2e)', () => {
   let app: INestApplication;
   let userRepository: Repository<User>;
 
