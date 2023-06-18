@@ -6,6 +6,7 @@ import { ProviderModule } from './providers/provider.module';
 import { jwtConfig } from '@config/jwt.config';
 import { UserModule } from '@modules/user/user.module';
 import { AuthModule } from '@modules/auth/auth.module';
+import { RoleModule } from './modules/role/role.module';
 
 
 @Module({
@@ -21,7 +22,8 @@ import { AuthModule } from '@modules/auth/auth.module';
      }),
     ProviderModule,
     AuthModule,
-    UserModule
+    UserModule,
+    RoleModule
   ],
   providers: [],
   controllers: [],
