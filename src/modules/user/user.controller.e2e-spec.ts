@@ -5,7 +5,7 @@ import {  getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './repositories/typeorm/user.entity';
-import { AppModule } from '../../../app.module';
+import { AppModule } from '../../app.module';
 
 describe('UserController (e2e)', () => {
   let app: INestApplication;

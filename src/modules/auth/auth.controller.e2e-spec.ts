@@ -2,7 +2,7 @@ import { INestApplication } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import * as request from 'supertest';
-import { AppModule } from "../../../app.module";
+import { AppModule } from "../../app.module";
 import { User } from "../user/repositories/typeorm/user.entity";
 import { Repository } from "typeorm";
 import { CreateUserDto } from "../user/dto/create-user.dto";
