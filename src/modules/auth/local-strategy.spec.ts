@@ -1,17 +1,12 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { LocalStrategy } from "./local-strategy";
-import { IAUTH_SERVICE } from "./constants/auth.constants";
-import { IAuthService } from "./interfaces/auth-service.interface";
 import { UserDto } from "@shared/dto";
+import { AuthService } from "./auth.service";
 
 
 describe('LocalStrategy', () => {
   let localStrategy: LocalStrategy;
-  let mockAuthService: IAuthService ={
-    validateUser: jest.fn(),
-    jwtSign: jest.fn(),
-    jwtRefresh: jest.fn(),
-  }
+  let authService: AuthService;
 
   beforeEach(async () => {
 
@@ -19,14 +14,18 @@ describe('LocalStrategy', () => {
       providers: [
         LocalStrategy,
         {
-          provide: IAUTH_SERVICE,
-          useValue: mockAuthService
+          provide: AuthService,
+          useValue: {
+            validateUser: jest.fn(),
+            jwtSign: jest.fn(),
+            jwtRefresh: jest.fn(),
+          }
         },
       ],
     }).compile();
 
     localStrategy = module.get<LocalStrategy>(LocalStrategy);
-    mockAuthService = module.get<IAuthService>(IAUTH_SERVICE);
+    authService = module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {
@@ -44,12 +43,12 @@ describe('LocalStrategy', () => {
       active: true,
     };
 
-    jest.spyOn(mockAuthService, 'validateUser').mockResolvedValue(mockUser);
+    jest.spyOn(authService, 'validateUser').mockResolvedValue(mockUser);
 
     const result = await localStrategy.validate('test@test.com', 'Aa123456');
 
     expect(result).toEqual(mockUser);
-    expect(mockAuthService.validateUser).toHaveBeenCalledTimes(1);
+    expect(authService.validateUser).toHaveBeenCalledTimes(1);
 
   });
     

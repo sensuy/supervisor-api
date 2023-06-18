@@ -1,12 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './auth.service';
-import { IUSER_SERVICE } from '../user/constants/user-layers.constants';
 import { jwtConfig } from '@config/jwt.config';
 import { JwtService } from '@nestjs/jwt';
 import { IUser } from '@shared/interfaces';
-import { IUserService } from '../user/interfaces';
 import { AuthResponseDto } from './dto/auth-response.dto';
 import { UnauthorizedException } from '@nestjs/common';
+import { UserService } from '@modules/user/user.service';
 
 describe('AuthService', () => {
   const user: IUser = {
@@ -21,7 +20,7 @@ describe('AuthService', () => {
   };
 
   let service: AuthService;
-  let userService: IUserService;
+  let userService: UserService;
   let jwtService: JwtService;
 
   beforeEach(async () => {
@@ -30,7 +29,7 @@ describe('AuthService', () => {
       providers: [
         AuthService,
         {
-          provide: IUSER_SERVICE,
+          provide: UserService,
           useValue: {
             validateUserLogin: jest.fn(),
             findById: jest.fn(),
@@ -55,7 +54,7 @@ describe('AuthService', () => {
     }).compile();
 
     service = module.get<AuthService>(AuthService);
-    userService = module.get<IUserService>(IUSER_SERVICE);
+    userService = module.get<UserService>(UserService);
     jwtService = module.get<JwtService>(JwtService);
   });
 

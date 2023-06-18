@@ -4,18 +4,16 @@ import { jwtConfig } from '@config/jwt.config';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 
-import { IUserService } from '../user/interfaces';
-import { IUSER_SERVICE } from '../user/constants/user-layers.constants';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { ProfileResponseDto } from './dto/profile-response.dto';
+import { UserService } from '@modules/user/user.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     @Inject(jwtConfig.KEY)
     private config: ConfigType<typeof jwtConfig>,
-    @Inject(IUSER_SERVICE)
-    private userService: IUserService,
+    private userService: UserService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),

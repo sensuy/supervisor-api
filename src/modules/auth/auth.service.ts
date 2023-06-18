@@ -1,7 +1,4 @@
 import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
-import { IAuthService } from "./interfaces/auth-service.interface";
-import { IUSER_SERVICE } from "../user/constants/user-layers.constants";
-import { IUserService } from "../user/interfaces";
 import { JwtService } from "@nestjs/jwt";
 import { jwtConfig } from "@config/jwt.config";
 import { ConfigType } from "@nestjs/config";
@@ -10,19 +7,20 @@ import { JwtPayload } from "./interfaces/jwt-payload.interface";
 import { IUser } from "@shared/interfaces";
 import { RefreshResponseDto } from "./dto/refresh-response.dto";
 import { User } from "@modules/user/repositories/typeorm/user.entity";
+import { UserService } from "@modules/user/user.service";
+import { UserDto } from "@shared/dto";
 
 @Injectable()
-export class AuthService implements IAuthService {
+export class AuthService {
 
   constructor(
     private jwtService: JwtService,
-    @Inject(IUSER_SERVICE)
-    private readonly userService: IUserService,
+    private readonly userService: UserService,
     @Inject(jwtConfig.KEY)
     private config: ConfigType<typeof jwtConfig>
   ) { }
 
-  async validateUser(email: string, password: string): Promise<User> {
+  async validateUser(email: string, password: string): Promise<UserDto> {
     return this.userService.validateUserLogin(email, password);
   }
 

@@ -1,18 +1,25 @@
-import { ApiBearerAuth, ApiBody, ApiHeader, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiHeader,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse
+} from '@nestjs/swagger';
+
 import {
   Body,
   Controller,
   Get,
   HttpCode,
-  Inject,
   Post,
   UseGuards
 } from '@nestjs/common';
 
 import { AuthResponseDto } from './dto/auth-response.dto';
 import { AuthUser } from './decorators/auth-user.decorator';
-import { IAUTH_SERVICE } from './constants/auth.constants';
-import { IAuthService } from './interfaces/auth-service.interface';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { ProfileResponseDto } from './dto/profile-response.dto';
@@ -20,7 +27,7 @@ import { IUser } from '@shared/interfaces';
 import { UserLoginDto } from './dto/user-login.dto';
 import { RefreshResponseDto } from './dto/refresh-response.dto';
 import { NotFoundDto, UnauthorizedDto } from '@shared/errors';
-import { Not } from 'typeorm';
+import { AuthService } from './auth.service';
 
 
 @ApiTags('Auth')
@@ -28,8 +35,7 @@ import { Not } from 'typeorm';
 export class AuthController {
 
   constructor(
-    @Inject(IAUTH_SERVICE)
-    private readonly authService: IAuthService
+    private readonly authService: AuthService
   ) { }
 
   @Post('login')
@@ -55,7 +61,7 @@ export class AuthController {
   async login(@AuthUser() user: IUser): Promise<AuthResponseDto> {
     return this.authService.jwtSign(user);
   }
-  
+
   @Post('/refresh')
   @ApiOperation({
     summary: 'Refresh a user token',
@@ -79,7 +85,7 @@ export class AuthController {
   }
 
   @Get('profile')
-    @ApiOperation({
+  @ApiOperation({
     summary: 'Refresh a user token',
     description: 'Verify if the refresh token is valid and return a new access token'
   })

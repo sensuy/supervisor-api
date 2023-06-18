@@ -2,15 +2,14 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UnauthorizedException } from '@nestjs/common';
 import { jwtConfig } from '@config/jwt.config';
 
-import { IUserService } from '../user/interfaces';
-import { IUSER_SERVICE } from '../user/constants/user-layers.constants';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 import { JwtStrategy } from './jwt-strategy';
 import { IUser } from '@shared/interfaces';
+import { UserService } from '@modules/user/user.service';
 
 describe('JwtStrategy', () => {
   let jwtStrategy: JwtStrategy;
-  let mockUserService: IUserService;
+  let userService: UserService;
 
   const user: IUser = {
     id: 'testId',
@@ -34,7 +33,7 @@ describe('JwtStrategy', () => {
           useValue: { secret: 'testSecret' }
         },
         {
-          provide: IUSER_SERVICE,
+          provide: UserService,
           useValue: {
             findById: jest.fn(),
           }
@@ -43,7 +42,7 @@ describe('JwtStrategy', () => {
     }).compile();
 
     jwtStrategy = module.get<JwtStrategy>(JwtStrategy);
-    mockUserService = module.get<IUserService>(IUSER_SERVICE);
+    userService = module.get<UserService>(UserService);
   });
 
   it('should be defined', () => {
@@ -54,7 +53,7 @@ describe('JwtStrategy', () => {
     const payload: JwtPayload = { sub: 'testId' };
    
 
-    jest.spyOn(mockUserService, 'findById').mockResolvedValueOnce(user);
+    jest.spyOn(userService, 'findById').mockResolvedValueOnce(user);
     
     const { password, salt, updatedAt, ...profileResponse } = user;
 
@@ -65,7 +64,7 @@ describe('JwtStrategy', () => {
   it('should throw UnauthorizedException when user is not found', async () => {
     const payload: JwtPayload = { sub: 'testId' };
 
-    jest.spyOn(mockUserService, 'findById').mockResolvedValueOnce(null);
+    jest.spyOn(userService, 'findById').mockResolvedValueOnce(null);
     
     await expect(jwtStrategy.validate(payload)).rejects.toThrow(new UnauthorizedException('Invalid user'));
 
@@ -75,7 +74,7 @@ describe('JwtStrategy', () => {
     const payload: JwtPayload = { sub: 'testId' };
     const inactiveUser = {...user, active: false };
 
-    jest.spyOn(mockUserService, 'findById').mockResolvedValueOnce(inactiveUser);
+    jest.spyOn(userService, 'findById').mockResolvedValueOnce(inactiveUser);
 
     await expect(jwtStrategy.validate(payload)).rejects.toThrow(new UnauthorizedException('Invalid user'));
   });

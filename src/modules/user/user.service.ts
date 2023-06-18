@@ -6,7 +6,7 @@ import {
   UnauthorizedException
 } from '@nestjs/common';
 import { CreateUserDto, CreateUserResponseDto } from './dto/create-user.dto';
-import { IUserRepository, IUserService } from './interfaces';
+import { IUserRepository } from './interfaces';
 import { IUSER_REPOSITORY } from './constants/user-layers.constants';
 import { HASH_PROVIDER } from '@shared/constants';
 import { IHashProvider } from '@providers/hash/interfaces/hash.interface';
@@ -15,7 +15,7 @@ import { IUser } from '@shared/interfaces';
 
 
 @Injectable()
-export class UserService implements IUserService {
+export class UserService {
 
   constructor(
     @Inject(IUSER_REPOSITORY) private readonly userRepository: IUserRepository,

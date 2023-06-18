@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { User } from './repositories/typeorm/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { IUSER_REPOSITORY, IUSER_SERVICE } from './constants/user-layers.constants';
+import { IUSER_REPOSITORY } from './constants/user-layers.constants';
 import { UserService } from './user.service';
 import { UserRepository } from './repositories/typeorm/user.repository';
 import { UserController } from './user.controller';
@@ -12,10 +12,7 @@ import { BcryptService } from '@providers/hash/services/bcrypt.service';
   imports: [TypeOrmModule.forFeature([User])],
   controllers: [UserController],
   providers: [
-    {
-      provide: IUSER_SERVICE,
-      useClass: UserService
-    },
+    UserService,
     {
       provide: IUSER_REPOSITORY,
       useClass: UserRepository
@@ -27,11 +24,8 @@ import { BcryptService } from '@providers/hash/services/bcrypt.service';
   ],
 
   exports: [
-    {
-      provide: IUSER_SERVICE,
-      useClass: UserService
-    },
+    UserService
   ]
 
 })
-export class UserModule {}
+export class UserModule { }

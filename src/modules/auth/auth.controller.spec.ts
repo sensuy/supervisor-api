@@ -1,13 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from './auth.controller';
-import { IAUTH_SERVICE } from './constants/auth.constants';
-import { IAuthService } from './interfaces/auth-service.interface';
 import { IUser } from '@shared/interfaces';
 import { ProfileResponseDto } from './dto/profile-response.dto';
+import { AuthService } from './auth.service';
 
 describe('AuthController', () => {
   let controller: AuthController;
-  let service: IAuthService;
+  let service: AuthService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -15,7 +14,7 @@ describe('AuthController', () => {
       controllers: [AuthController],
       providers: [
         {
-          provide: IAUTH_SERVICE,
+          provide: AuthService,
           useValue: {
             jwtSign: jest.fn(),
             jwtRefresh: jest.fn(),
@@ -26,7 +25,7 @@ describe('AuthController', () => {
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
-    service = module.get<IAuthService>(IAUTH_SERVICE);
+    service = module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {

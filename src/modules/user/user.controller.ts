@@ -3,16 +3,14 @@ import { ApiBadRequestResponse, ApiConflictResponse, ApiCreatedResponse, ApiOper
 import { CreateUserDto, CreateUserResponseDto } from './dto/create-user.dto';
 import { JoiValidationPipe } from '@shared/pipes/joi-validation.pipe';
 import { userCreateSchema } from './schemas/user-create.schema';
-import { IUserService } from './interfaces';
-import { IUSER_SERVICE } from './constants/user-layers.constants';
 import { BadRequestDto, ConflictDto } from '@shared/errors';
+import { UserService } from './user.service';
 
 @ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(
-    @Inject(IUSER_SERVICE) 
-    private readonly userService: IUserService
+    private readonly userService: UserService
   ) { }
 
   @Post()
