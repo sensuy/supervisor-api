@@ -1,6 +1,5 @@
 import { Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { IAuthService } from "./interfaces/auth-service.interface";
-import { User } from "../user/repositories/typeorm/user.entity";
 import { IUSER_SERVICE } from "../user/constants/user-layers.constants";
 import { IUserService } from "../user/interfaces";
 import { JwtService } from "@nestjs/jwt";
@@ -10,6 +9,7 @@ import { AuthResponseDto } from "./dto/auth-response.dto";
 import { JwtPayload } from "./interfaces/jwt-payload.interface";
 import { IUser } from "@shared/interfaces";
 import { RefreshResponseDto } from "./dto/refresh-response.dto";
+import { User } from "@modules/user/repositories/typeorm/user.entity";
 
 @Injectable()
 export class AuthService implements IAuthService {

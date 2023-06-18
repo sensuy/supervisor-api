@@ -3,11 +3,11 @@ import { ConfigModule, ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {  typeormConfig } from './config/typeorm.config';
 import { ProviderModule } from './providers/provider.module';
-import { AuthModule } from '@modules/auth/auth.module';
 import { jwtConfig } from '@config/jwt.config';
 import typeormMigrationConfig from '@config/typeorm-migration.config';
 import { serverConfig } from '@config/server.config';
 import { PassportModule } from '@nestjs/passport';
+import { AuthModule } from '@modules/auth.module';
 
 
 @Module({
