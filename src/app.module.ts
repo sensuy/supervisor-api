@@ -4,10 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {  typeormConfig } from './config/typeorm.config';
 import { ProviderModule } from './providers/provider.module';
 import { jwtConfig } from '@config/jwt.config';
-import typeormMigrationConfig from '@config/typeorm-migration.config';
-import { serverConfig } from '@config/server.config';
-import { PassportModule } from '@nestjs/passport';
-import { AuthModule } from '@modules/auth.module';
+import { UserModule } from '@modules/user/user.module';
+import { AuthModule } from '@modules/auth/auth.module';
 
 
 @Module({
@@ -22,7 +20,8 @@ import { AuthModule } from '@modules/auth.module';
       useFactory: async (config: ConfigType<typeof typeormConfig>) => config,
      }),
     ProviderModule,
-    AuthModule
+    AuthModule,
+    UserModule
   ],
   providers: [],
   controllers: [],
