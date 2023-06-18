@@ -26,4 +26,10 @@ export class CommonEntityDto implements ICommonEntity {
     description: 'The date and time at which the resource was updated',
   })
   updatedAt: Date;
+
+  @ApiProperty({
+    title: 'Active',
+    description: 'The flag to inform if this register is active or not.',
+  })
+  active: boolean;
 }

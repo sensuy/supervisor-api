@@ -6,5 +6,4 @@ export interface IUser extends ICommonEntity {
   email: string;
   password: string;
   salt: string;
-  active: boolean;
 }

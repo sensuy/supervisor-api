@@ -12,6 +12,4 @@ export class User extends CommonEntity implements IUser {
   password: string;
   @Column({ type: 'text', nullable: false })
   salt: string;
-  @Column({ type: 'boolean', nullable: false, default: true })
-  active: boolean;
 }

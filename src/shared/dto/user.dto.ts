@@ -42,10 +42,4 @@ export class UserDto
     example: 'Password123@',
   })
   password: string;
-
-  @ApiProperty({
-    title: 'Active',
-    description: 'The flag to inform if user is active or not.',
-  })
-  active: boolean;
 }
