@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { RoleService } from './role.service';
-import { CreateRoleDto } from './dto/create-role.dto';
+import { CreateRoleDto, CreateRoleResponseDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Role')
 @Controller('role')
@@ -10,12 +10,15 @@ export class RoleController {
   constructor(private readonly roleService: RoleService) {}
 
   @Post()
-  create(@Body() createRoleDto: CreateRoleDto) {
+  @ApiOperation({
+    summary: 'Create a new role'
+  })
+  create(@Body() createRoleDto: CreateRoleDto): Promise<CreateRoleResponseDto> {
     return this.roleService.create(createRoleDto);
   }
 
-  @Get()
-  findAll() {
+  @Get('franchise/:franchiseId')
+  findAllFranchiseRoles() {
     return this.roleService.findAll();
   }
 

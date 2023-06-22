@@ -1,4 +1,5 @@
 
+import { Role } from '@modules/role/repositories/typeorm/role.entity';
 import { User } from '@modules/user/repositories/typeorm/user.entity';
 import { registerAs } from '@nestjs/config';
 import { TypeOrmOptionsFactory, TypeOrmModuleOptions } from '@nestjs/typeorm';
@@ -15,7 +16,7 @@ export const typeormConfig = registerAs(
       database: process.env.DATABASE_NAME,
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
-      entities: [User],
+      entities: [User, Role],
       migrations: ['dist/src/shared/migrations/*{.ts,.js}'],
       logging: ['error', 'warn'],
       synchronize: false
