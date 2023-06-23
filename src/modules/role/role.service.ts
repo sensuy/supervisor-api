@@ -22,8 +22,8 @@ export class RoleService {
     return roleResponse;
   }
 
-  findAll() {
-    return `This action returns all role`;
+  findAllFranchiseRoles(idfranchise: string) {
+    return this.roleRepository.findAllFranchiseRoles(idfranchise);
   }
 
   findOne(id: number) {

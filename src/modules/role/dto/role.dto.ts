@@ -20,14 +20,14 @@ export class RoleDto
   @ApiProperty({
     title: 'Franchise ID',
     description: 'The franchise ID with which the role is associated',
-    example: 'f0a5e3c0-6c7b-11eb-9439-0242ac130002'
+    example: 'f0a5e3c0-6c7b-11eb-9439-0242ac130001'
   })
   idfranchise: string;
 
   @ApiProperty({
     title: 'School ID',
     description: 'The school ID with which the role is associated',
-    example: 'f0a5e3c0-6c7b-11eb-9439-0242ac130002'
+    example: 'f0a5e3c0-6c7b-11eb-9439-0242ac130003'
   })
   idschool: string;
 }
