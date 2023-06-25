@@ -45,12 +45,15 @@ export class RoleController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() name: string) {
-    return this.roleService.update(id, name);
+  @ApiOperation({
+    summary: 'Update a role name'
+  })
+  update(@Param('id') id: string, @Body() payload: UpdateRoleDto) {
+    return this.roleService.update(id, payload.name);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.roleService.remove(+id);
+    return this.roleService.remove(id);
   }
 }

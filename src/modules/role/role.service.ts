@@ -41,7 +41,7 @@ export class RoleService {
     return this.roleRepository.update(id, role);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} role`;
   }
 }
