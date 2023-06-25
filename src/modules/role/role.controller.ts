@@ -4,10 +4,9 @@ import { CreateRoleDto, CreateRoleResponseDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '@shared/pipes/joi-validation.pipe';
-import { idfranchise, roleCreateSchema } from './schemas/role-create.schema';
-import { uuid } from '@shared/schemas/uuid.schema';
-import { idFranchiseSchema } from './schemas/idfranchise.schema';
-import { IdfranchiseDto } from './dto/idfranchise.dto';
+import { roleCreateSchema } from './schemas/role-create.schema';
+import { idfranchiseSchema } from './schemas/idfranchise.schema';
+import { idschoolSchema } from './schemas/idschool.schema';
 
 @ApiTags('Role')
 @Controller('role')
@@ -24,11 +23,25 @@ export class RoleController {
   }
 
   @Get('franchise/:idfranchise')
-  @UsePipes(new JoiValidationPipe(idFranchiseSchema))
+  @ApiOperation({
+    summary: 'List all roles by franchise'
+  })
+  @UsePipes(new JoiValidationPipe(idfranchiseSchema))
   findAllFranchiseRoles(
     @Param('idfranchise') idfranchise: string
   ) {
     return this.roleService.findAllFranchiseRoles(idfranchise);
+  }
+
+  @Get('school/:idschool')
+  @ApiOperation({
+    summary: 'List all roles by school'
+  })
+  @UsePipes(new JoiValidationPipe(idschoolSchema))
+  findAllSchoolRoles(
+    @Param('idschool') idschool: string
+  ) {
+    return this.roleService.findAllSchoolRoles(idschool);
   }
 
   @Get(':id')

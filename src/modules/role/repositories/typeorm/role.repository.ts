@@ -1,8 +1,8 @@
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Role } from "./role.entity";
-import { IRoleRepository } from "@modules/role/interfaces/role-repository.interface";
 import { CreateRoleDto } from "@modules/role/dto/create-role.dto";
+import { IRoleRepository } from "@modules/role/interfaces";
 
 
 export class RoleRepository implements IRoleRepository {
@@ -20,7 +20,11 @@ export class RoleRepository implements IRoleRepository {
   }
 
   findAllFranchiseRoles(idfranchise: string): Promise<Role[]> {
-    return this.repository.find({ where: { idfranchise, active: true } });
+    return this.repository.find({ where: { idfranchise, active: true }, select: ['id', 'name'] });
+  }
+
+  findAllSchoolRoles(idschool: string): Promise<Role[]> {
+    return this.repository.find({ where: { idschool, active: true }, select: ['id', 'name'] });
   }
 
 }

@@ -26,6 +26,10 @@ export class RoleService {
     return this.roleRepository.findAllFranchiseRoles(idfranchise);
   }
 
+  findAllSchoolRoles(idschool: string) {
+    return this.roleRepository.findAllSchoolRoles(idschool);
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} role`;
   }
