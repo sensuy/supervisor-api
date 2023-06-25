@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateRoleDto, CreateRoleResponseDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { IROLE_REPOSITORY } from './constants/role.constants';
@@ -10,15 +10,15 @@ export class RoleService {
   constructor(
     @Inject(IROLE_REPOSITORY)
     private readonly roleRepository: IRoleRepository
-  ) {}
+  ) { }
 
   async create(createRoleDto: CreateRoleDto): Promise<CreateRoleResponseDto> {
 
     const role = await this.roleRepository.create(createRoleDto);
-    
+
     const roleCreated = await this.roleRepository.save(role);
     const { updatedAt, ...roleResponse } = roleCreated;
-    
+
     return roleResponse;
   }
 
@@ -30,12 +30,15 @@ export class RoleService {
     return this.roleRepository.findAllSchoolRoles(idschool);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} role`;
-  }
+  async update(id: string, name: string) {
+    const role = await this.roleRepository.findById(id);
+    if (!role) {
+      throw new NotFoundException('Role not found');
+    }
 
-  update(id: number, updateRoleDto: UpdateRoleDto) {
-    return `This action updates a #${id} role`;
+    Object.assign(role, { name });
+
+    return this.roleRepository.update(id, role);
   }
 
   remove(id: number) {
