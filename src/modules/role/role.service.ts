@@ -32,13 +32,17 @@ export class RoleService {
 
   async update(id: string, name: string) {
     const role = await this.roleRepository.findById(id);
-    if (!role) {
+    if (!role || !role.active) {
       throw new NotFoundException('Role not found');
     }
 
     Object.assign(role, { name });
 
-    return this.roleRepository.update(id, role);
+    const roleUpdated = await this.roleRepository.update(id, role);
+
+    const { updatedAt, ...roleResponse } = roleUpdated;
+
+    return roleResponse
   }
 
   remove(id: string) {

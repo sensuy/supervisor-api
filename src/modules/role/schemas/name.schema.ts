@@ -9,3 +9,8 @@ export const name = Joi
   .required()
 
 
+  export const nameSchema = Joi.object({
+    name
+  });
+
+

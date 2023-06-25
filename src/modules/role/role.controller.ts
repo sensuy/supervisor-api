@@ -7,11 +7,13 @@ import { JoiValidationPipe } from '@shared/pipes/joi-validation.pipe';
 import { roleCreateSchema } from './schemas/role-create.schema';
 import { idfranchiseSchema } from './schemas/idfranchise.schema';
 import { idschoolSchema } from './schemas/idschool.schema';
+import { idSchema } from '@shared/schemas/id.schema';
+import { nameSchema } from './schemas/name.schema';
 
 @ApiTags('Role')
 @Controller('role')
 export class RoleController {
-  constructor(private readonly roleService: RoleService) {}
+  constructor(private readonly roleService: RoleService) { }
 
   @Post()
   @ApiOperation({
@@ -48,7 +50,11 @@ export class RoleController {
   @ApiOperation({
     summary: 'Update a role name'
   })
-  update(@Param('id') id: string, @Body() payload: UpdateRoleDto) {
+  update(
+    @Param('id', new JoiValidationPipe(idSchema)) id: string,
+    @Body( new JoiValidationPipe(nameSchema)) payload: UpdateRoleDto
+  ) {
+    console.log(id, payload);
     return this.roleService.update(id, payload.name);
   }
 

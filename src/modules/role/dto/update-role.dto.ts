@@ -1,4 +1,3 @@
-import { PartialType } from '@nestjs/swagger';
 import { IntersectionType, PickType } from '@nestjs/mapped-types';
 import { RoleDto } from './role.dto';
 import { IRoleCreatable } from '../interfaces';
