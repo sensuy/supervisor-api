@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes } from '@ne
 import { RoleService } from './role.service';
 import { CreateRoleDto, CreateRoleResponseDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '@shared/pipes/joi-validation.pipe';
 import { roleCreateSchema } from './schemas/role-create.schema';
 import { idfranchiseSchema } from './schemas/idfranchise.schema';
@@ -50,11 +50,13 @@ export class RoleController {
   @ApiOperation({
     summary: 'Update a role name'
   })
+  @ApiBody({
+    type: UpdateRoleDto
+  })
   update(
-    @Param('id', new JoiValidationPipe(idSchema)) id: string,
-    @Body( new JoiValidationPipe(nameSchema)) payload: UpdateRoleDto
+    @Body(new JoiValidationPipe(nameSchema)) payload: UpdateRoleDto,
+    @Param('id', new JoiValidationPipe(idSchema)) id: string
   ) {
-    console.log(id, payload);
     return this.roleService.update(id, payload.name);
   }
 
