@@ -1,14 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ParseIntPipe } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { CreateRoleDto, CreateRoleResponseDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '@shared/pipes/joi-validation.pipe';
 import { roleCreateSchema } from './schemas/role-create.schema';
-import { idfranchiseSchema } from './schemas/idfranchise.schema';
-import { idschoolSchema } from './schemas/idschool.schema';
-import { idSchema } from '@shared/schemas/id.schema';
 import { nameSchema } from './schemas/name.schema';
+import { franchiseIdSchema } from './schemas/franchiseid.schema';
+import { schoolIdSchema } from './schemas/schoolid.schema';
+import { roleIdSchema } from './schemas/roleid.schema';
 
 @ApiTags('Role')
 @Controller('role')
@@ -28,7 +28,7 @@ export class RoleController {
   @ApiOperation({
     summary: 'List all roles by franchise'
   })
-  @UsePipes(new JoiValidationPipe(idfranchiseSchema))
+  @UsePipes(new JoiValidationPipe(franchiseIdSchema))
   findAllFranchiseRoles(
     @Param('idfranchise') idfranchise: string
   ) {
@@ -39,14 +39,14 @@ export class RoleController {
   @ApiOperation({
     summary: 'List all roles by school'
   })
-  @UsePipes(new JoiValidationPipe(idschoolSchema))
+  @UsePipes(new JoiValidationPipe(schoolIdSchema))
   findAllSchoolRoles(
     @Param('idschool') idschool: string
   ) {
     return this.roleService.findAllSchoolRoles(idschool);
   }
 
-  @Patch(':id')
+  @Patch(':roleid')
   @ApiOperation({
     summary: 'Update a role name'
   })
@@ -54,14 +54,15 @@ export class RoleController {
     type: UpdateRoleDto
   })
   update(
-    @Param('id', new JoiValidationPipe(idSchema)) id: string,
+    @Param('roleid',new JoiValidationPipe(roleIdSchema)) roleid: string,
     @Body(new JoiValidationPipe(nameSchema)) payload: UpdateRoleDto
   ) {
-    return this.roleService.update(+id, payload.name);
+    return this.roleService.update(+roleid, payload.name);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.roleService.remove(id);
+  @Delete(':roleid')
+  @UsePipes(new JoiValidationPipe(roleIdSchema))
+  remove(@Param('roleid') roleid: string) {
+    return this.roleService.remove(+roleid);
   }
 }

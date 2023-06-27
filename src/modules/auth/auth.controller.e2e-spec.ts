@@ -133,7 +133,7 @@ describe('AuthController (e2e)', () => {
         
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
-        id: expect.any(String),
+        userid: expect.any(String),
         username: createUser.username,
         email: createUser.email,
         createdAt: expect.any(String),

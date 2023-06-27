@@ -21,12 +21,12 @@ describe('UserService', () => {
     password: 'password',
     salt: 'salt',
     active: true,
-    id: 'id',
+    userid: 'id',
     createdAt: new Date(),
     updatedAt: new Date()
   };
 
-  const { id, createdAt, updatedAt, ...rest } = userDto;
+  const { userid, createdAt, updatedAt, ...rest } = userDto;
   const createUserDto: CreateUserDto = rest;
 
   beforeEach(async () => {
@@ -90,15 +90,15 @@ describe('UserService', () => {
     it('should be able to find a user by id', async () => {
       jest.spyOn(userRepository, 'findById').mockResolvedValueOnce(userDto);
 
-      const result = await userService.findById(userDto.id);
+      const result = await userService.findById(userDto.userid);
       expect(result).toEqual(userDto);
-      expect(userRepository.findById).toHaveBeenCalledWith(userDto.id);
+      expect(userRepository.findById).toHaveBeenCalledWith(userDto.userid);
     });
 
     it('should throw a NotFoundException if user does not exists', async () => {
       jest.spyOn(userRepository, 'findById').mockResolvedValueOnce(null);
 
-      await expect(userService.findById(userDto.id)).rejects.toThrow(new NotFoundException('User not found'));
+      await expect(userService.findById(userDto.userid)).rejects.toThrow(new NotFoundException('User not found'));
     });
   });
 

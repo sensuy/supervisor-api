@@ -1,6 +1,7 @@
 import {
   ApiBearerAuth,
   ApiBody,
+  ApiCreatedResponse,
   ApiHeader,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -25,9 +26,9 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { ProfileResponseDto } from './dto/profile-response.dto';
 import { IUser } from '@shared/interfaces';
 import { UserLoginDto } from './dto/user-login.dto';
-import { RefreshResponseDto } from './dto/refresh-response.dto';
 import { NotFoundDto, UnauthorizedDto } from '@shared/errors';
 import { AuthService } from './auth.service';
+import { RefreshTokenRequestDto, RefreshTokenResponseDto } from './dto/refresh-token.dto';
 
 
 @ApiTags('Auth')
@@ -67,10 +68,9 @@ export class AuthController {
     summary: 'Refresh a user token',
     description: 'Verify if the refresh token is valid and return a new access token'
   })
-  @ApiBody({ type: UserLoginDto })
-  @ApiOkResponse({
-    description: 'The user has been successfully logged in.',
-    type: RefreshResponseDto,
+  @ApiCreatedResponse({
+    description: 'The access token has been successfully refreshed.',
+    type: RefreshTokenResponseDto,
   })
   @ApiUnauthorizedResponse({
     description: 'Refresh token expired or invalid',
@@ -80,8 +80,8 @@ export class AuthController {
     description: 'User not found',
     type: NotFoundDto,
   })
-  refresh(@Body() authRefreshDto: string): Promise<RefreshResponseDto> {
-    return this.authService.jwtRefresh(authRefreshDto);
+  refresh(@Body() payload: RefreshTokenRequestDto): Promise<RefreshTokenResponseDto> {
+    return this.authService.jwtRefresh(payload.refreshToken);
   }
 
   @Get('profile')

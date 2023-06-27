@@ -5,10 +5,9 @@ import { ConfigType } from "@nestjs/config";
 import { AuthResponseDto } from "./dto/auth-response.dto";
 import { JwtPayload } from "./interfaces/jwt-payload.interface";
 import { IUser } from "@shared/interfaces";
-import { RefreshResponseDto } from "./dto/refresh-response.dto";
-import { User } from "@modules/user/repositories/typeorm/user.entity";
 import { UserService } from "@modules/user/user.service";
 import { UserDto } from "@shared/dto";
+import { RefreshTokenResponseDto } from "./dto/refresh-token.dto";
 
 @Injectable()
 export class AuthService {
@@ -48,12 +47,12 @@ export class AuthService {
     return tokens;
   }
 
-  async jwtRefresh(authRefreshDto: any): Promise<RefreshResponseDto> {
+  async jwtRefresh(refreshToken: string): Promise<RefreshTokenResponseDto> {
     const refreshConfig = this.config.refresh;
     let verified: JwtPayload;
     try {
       verified = await this.jwtService.verifyAsync<JwtPayload>(
-        authRefreshDto.refreshToken,
+        refreshToken,
         refreshConfig?.verifyOptions
       );
     } catch (error) {

@@ -12,7 +12,7 @@ describe('JwtStrategy', () => {
   let userService: UserService;
 
   const user: IUser = {
-    id: 'testId',
+    userid: 'testId',
     active: true,
     password: 'password',
     salt: 'salt',

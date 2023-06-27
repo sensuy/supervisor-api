@@ -11,15 +11,15 @@ export class Role extends CommonEntity implements IRole {
   })
   name: string;
   @Column({
-    name: 'fk_idfranchise',
+    name: 'fk_franchiseid',
     type: 'text',
     nullable: true
   })
-  idfranchise: string;
+  franchiseid: string;
   @Column({
-    name: 'fk_idschool',
+    name: 'fk_schoolid',
     type: 'text',
     nullable: true
   })
-  idschool: string;
+  schoolid: string;
 }

@@ -36,7 +36,7 @@ describe('AuthController', () => {
     jest.spyOn(service, 'jwtSign').mockResolvedValueOnce({ accessToken: 'test', refreshToken: 'test' });
 
     const user: IUser = {
-      id: '1',
+      userid: '1',
       email: 'test@gmail.com',
       password: '123456',
       username: 'test',
@@ -62,7 +62,7 @@ describe('AuthController', () => {
 
   it('Should be able to get a profile with a access token', () => {
     const user: ProfileResponseDto = {
-      id: '1',
+      userid: '1',
       email: 'email@test.com',
       username: 'test',
       createdAt: new Date(),

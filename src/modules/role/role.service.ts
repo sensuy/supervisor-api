@@ -45,7 +45,7 @@ export class RoleService {
     return roleResponse
   }
 
-  remove(id: string) {
+  remove(id: number) {
     return `This action removes a #${id} role`;
   }
 }

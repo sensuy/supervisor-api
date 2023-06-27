@@ -9,7 +9,7 @@ import { UserService } from '@modules/user/user.service';
 
 describe('AuthService', () => {
   const user: IUser = {
-    id: '1',
+    userid: '1',
     email: 'email@test.com',
     username: '',
     password: 'test1234',
@@ -91,7 +91,7 @@ describe('AuthService', () => {
 
     it('should be able to generate a new access token with the refresh token', async () => {
 
-      jest.spyOn(jwtService, 'verifyAsync').mockResolvedValueOnce({ sub: user.id });
+      jest.spyOn(jwtService, 'verifyAsync').mockResolvedValueOnce({ sub: user.userid });
       jest.spyOn(userService, 'findById').mockResolvedValueOnce(user);
       jest.spyOn(jwtService, 'sign').mockImplementationOnce(() => 'accessToken'); 
 

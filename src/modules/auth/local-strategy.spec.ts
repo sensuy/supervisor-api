@@ -34,7 +34,7 @@ describe('LocalStrategy', () => {
 
   it('should call validateUser', async () => {
     const mockUser: UserDto = {
-      id: '1',
+      userid: '1',
       email: 'test@test.com',
       username: 'Jhon Doe',
       password: 'Aa123456',
