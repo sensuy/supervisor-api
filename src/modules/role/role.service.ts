@@ -30,15 +30,15 @@ export class RoleService {
     return this.roleRepository.findAllSchoolRoles(idschool);
   }
 
-  async update(id: string, name: string) {
-    const role = await this.roleRepository.findById(id);
+  async update(roleid: number, name: string) {
+    const role = await this.roleRepository.findById(roleid);
     if (!role || !role.active) {
       throw new NotFoundException('Role not found');
     }
 
     Object.assign(role, { name });
 
-    const roleUpdated = await this.roleRepository.update(id, role);
+    const roleUpdated = await this.roleRepository.update(roleid, role);
 
     const { updatedAt, ...roleResponse } = roleUpdated;
 

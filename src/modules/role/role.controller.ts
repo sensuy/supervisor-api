@@ -54,10 +54,10 @@ export class RoleController {
     type: UpdateRoleDto
   })
   update(
-    @Body(new JoiValidationPipe(nameSchema)) payload: UpdateRoleDto,
-    @Param('id', new JoiValidationPipe(idSchema)) id: string
+    @Param('id', new JoiValidationPipe(idSchema)) id: string,
+    @Body(new JoiValidationPipe(nameSchema)) payload: UpdateRoleDto
   ) {
-    return this.roleService.update(id, payload.name);
+    return this.roleService.update(+id, payload.name);
   }
 
   @Delete(':id')

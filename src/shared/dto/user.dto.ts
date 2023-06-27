@@ -17,6 +17,14 @@ export class UserDto
   implements Omit<IUser, 'password' | 'salt'>
 {
   @ApiProperty({
+    type: 'string',
+    format: 'uuid',
+    title: 'iduser',
+    description: 'Unique identifier for the user',
+  })
+  userid: string;
+
+  @ApiProperty({
     title: 'Username',
     description: 'The username of user.',
     minLength: USER_NAME_MIN_LENGTH,

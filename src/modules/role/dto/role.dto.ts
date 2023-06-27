@@ -9,6 +9,13 @@ export class RoleDto
   extends CommonEntityDto
   implements IRole {
   @ApiProperty({
+    type: 'number',
+    title: 'roleid',
+    description: 'Unique identifier for the role',
+  })
+  roleid: number;
+
+  @ApiProperty({
     title: 'name',
     description: 'The role label',
     minLength: ROLE_NAME_MIN_LENGTH,

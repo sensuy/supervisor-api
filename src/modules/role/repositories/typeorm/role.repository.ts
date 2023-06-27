@@ -19,20 +19,20 @@ export class RoleRepository implements IRoleRepository {
     return this.repository.save(role);
   }
 
-  findById(id: string): Promise<Role> {
-    return this.repository.findOne({ where: { id } });
+  findById(roleid: number): Promise<Role> {
+    return this.repository.findOne({ where: { roleid } });
   }
 
-  update(id: string, role: Role): Promise<Role> {
-    return this.repository.save({ ...role, id });
+  update(roleid: number, role: Role): Promise<Role> {
+    return this.repository.save({ ...role, roleid });
   }
 
   findAllFranchiseRoles(idfranchise: string): Promise<Role[]> {
-    return this.repository.find({ where: { idfranchise, active: true }, select: ['id', 'name'] });
+    return this.repository.find({ where: { idfranchise, active: true }, select: ['roleid', 'name'] });
   }
 
   findAllSchoolRoles(idschool: string): Promise<Role[]> {
-    return this.repository.find({ where: { idschool, active: true }, select: ['id', 'name'] });
+    return this.repository.find({ where: { idschool, active: true }, select: ['roleid', 'name'] });
   }
 
 }

@@ -28,7 +28,7 @@ export class AuthService {
     const accessConfig = this.config.access;
     const refreshConfig = this.config.refresh;
 
-    const payload: JwtPayload = { sub: user.id };
+    const payload: JwtPayload = { sub: user.userid };
 
     const accessToken = this.jwtService.sign(
       payload,

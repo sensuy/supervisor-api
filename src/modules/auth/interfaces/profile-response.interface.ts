@@ -1,4 +1,4 @@
 import { IUser } from "@shared/interfaces";
 
 export interface IProfileResponse
-extends Pick<IUser, 'id' | 'username' | 'email' | 'createdAt' | 'active'> {}
+extends Pick<IUser, 'userid' | 'username' | 'email' | 'createdAt' | 'active'> {}
