@@ -1,8 +1,9 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateRoleDto, CreateRoleResponseDto } from './dto/create-role.dto';
-import { UpdateRoleDto } from './dto/update-role.dto';
 import { IROLE_REPOSITORY } from './constants/role.constants';
 import { IRoleRepository } from './interfaces/role-repository.interface';
+import { ListRoleDto } from './dto/list-role.dto';
+import { UpdateRoleResponseDto } from './dto/update-role.dto';
 
 @Injectable()
 export class RoleService {
@@ -22,15 +23,15 @@ export class RoleService {
     return roleResponse;
   }
 
-  findAllFranchiseRoles(idfranchise: string) {
+  findAllFranchiseRoles(idfranchise: string): Promise<ListRoleDto[]> {
     return this.roleRepository.findAllFranchiseRoles(idfranchise);
   }
 
-  findAllSchoolRoles(idschool: string) {
+  findAllSchoolRoles(idschool: string): Promise<ListRoleDto[]> {
     return this.roleRepository.findAllSchoolRoles(idschool);
   }
 
-  async update(roleid: number, name: string) {
+  async update(roleid: number, name: string): Promise<UpdateRoleResponseDto> {
     const role = await this.roleRepository.findById(roleid);
     if (!role || !role.active) {
       throw new NotFoundException('Role not found');
@@ -40,12 +41,24 @@ export class RoleService {
 
     const roleUpdated = await this.roleRepository.update(roleid, role);
 
-    const { updatedAt, ...roleResponse } = roleUpdated;
+    const { createdAt, ...roleResponse } = roleUpdated;
 
-    return roleResponse
+    return roleResponse;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} role`;
+  async remove(roleid: number): Promise<UpdateRoleResponseDto> {
+    const role = await this.roleRepository.findById(roleid);
+    
+    if (!role || !role.active) {
+      throw new NotFoundException('Role not found');
+    }
+
+    Object.assign(role, { active: false });
+
+    const roleUpdated = await this.roleRepository.update(roleid, role);
+
+    const { createdAt, ...roleResponse } = roleUpdated;
+
+    return roleResponse
   }
 }

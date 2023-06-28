@@ -3,6 +3,7 @@ import { Repository } from "typeorm";
 import { Role } from "./role.entity";
 import { CreateRoleDto } from "@modules/role/dto/create-role.dto";
 import { IRoleRepository } from "@modules/role/interfaces";
+import { ListRoleDto } from "@modules/role/dto/list-role.dto";
 
 
 export class RoleRepository implements IRoleRepository {
@@ -27,11 +28,11 @@ export class RoleRepository implements IRoleRepository {
     return this.repository.save({ ...role, roleid });
   }
 
-  findAllFranchiseRoles(franchiseid: string): Promise<Role[]> {
+  findAllFranchiseRoles(franchiseid: string): Promise<ListRoleDto[]> {
     return this.repository.find({ where: { franchiseid, active: true }, select: ['roleid', 'name'] });
   }
 
-  findAllSchoolRoles(schoolid: string): Promise<Role[]> {
+  findAllSchoolRoles(schoolid: string): Promise<ListRoleDto[]> {
     return this.repository.find({ where: { schoolid, active: true }, select: ['roleid', 'name'] });
   }
 

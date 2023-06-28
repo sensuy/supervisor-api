@@ -5,7 +5,7 @@ import { IntersectionType, OmitType, PartialType, PickType } from "@nestjs/swagg
 
 export class CreateRoleDto extends IntersectionType(
   PickType(RoleDto, ['name']),
-  PartialType(PickType(RoleDto, ['idfranchise', 'idschool'])),
+  PartialType(PickType(RoleDto, ['franchiseid', 'schoolid'])),
 ) implements IRoleCreatable {}
 
 

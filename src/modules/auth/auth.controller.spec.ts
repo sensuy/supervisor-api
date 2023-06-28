@@ -3,6 +3,7 @@ import { AuthController } from './auth.controller';
 import { IUser } from '@shared/interfaces';
 import { ProfileResponseDto } from './dto/profile-response.dto';
 import { AuthService } from './auth.service';
+import { RefreshTokenRequestDto } from './dto/refresh-token.dto';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -52,10 +53,12 @@ describe('AuthController', () => {
   });
 
   it('User should be able to refresh token', async () => {
-    const refreshToken = 'refreshTokenExampl';
+    const payload: RefreshTokenRequestDto  = {
+      refreshToken: 'refreshTokenExample'
+    };
     jest.spyOn(service, 'jwtRefresh').mockResolvedValueOnce({ accessToken: 'accessTokenExample' });
 
-    const result = await controller.refresh(refreshToken);
+    const result = await controller.refresh(payload);
 
     expect(result).toEqual({ accessToken: 'accessTokenExample' });
   });
