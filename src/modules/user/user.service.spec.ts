@@ -7,7 +7,6 @@ import { ConflictException, NotFoundException } from '@nestjs/common';
 import { HASH_PROVIDER } from '@shared/constants';
 import { IHashProvider } from '@providers/hash/interfaces/hash.interface';
 import { IUser } from '@shared/interfaces';
-import exp from 'constants';
 
 describe('UserService', () => {
 

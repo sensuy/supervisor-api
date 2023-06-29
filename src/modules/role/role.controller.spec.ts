@@ -4,6 +4,7 @@ import { RoleService } from './role.service';
 import { IRole } from './interfaces';
 import { CreateRoleResponseDto } from './dto/create-role.dto';
 import { ListRoleDto } from './dto/list-role.dto';
+import { UpdateRoleResponseDto } from './dto/update-role.dto';
 
 describe('RoleController', () => {
   let controller: RoleController;
@@ -26,7 +27,11 @@ describe('RoleController', () => {
         {
           provide: RoleService,
           useValue: {
-            create: jest.fn()
+            create: jest.fn(),
+            findAllFranchiseRoles: jest.fn(),
+            findAllSchoolRoles: jest.fn(),
+            update: jest.fn(),
+            remove: jest.fn()
           }
         }
       ],
@@ -59,7 +64,7 @@ describe('RoleController', () => {
   });
 
   it('should be able to list all roles by franchise', async () => {
-    const responseRole: ListRoleDto[] = [role];
+    const responseRole: ListRoleDto[] = [{roleid: 1, name: 'test'}];
 
     jest.spyOn(service, 'findAllFranchiseRoles').mockResolvedValue(responseRole);
 
@@ -68,6 +73,47 @@ describe('RoleController', () => {
     expect(response).toEqual(responseRole);
     expect(service.findAllFranchiseRoles).toHaveBeenCalledWith(role.franchiseid);
     expect(service.findAllFranchiseRoles).toHaveBeenCalledTimes(1);
+  });
+
+  it('should be able to list all roles by school', async () => {
+    const responseRole: ListRoleDto[] = [{roleid: 1, name: 'test'}];
+
+    jest.spyOn(service, 'findAllSchoolRoles').mockResolvedValue(responseRole);
+
+    const response = await controller.findAllSchoolRoles(role.schoolid);
+
+    expect(response).toEqual(responseRole);
+    expect(service.findAllSchoolRoles).toHaveBeenCalledWith(role.schoolid);
+    expect(service.findAllSchoolRoles).toHaveBeenCalledTimes(1);
+  });
+
+  it('should be able to update a role', async () => {
+    const updateRoleDto = {
+      name: 'test'
+    }
+    const {createdAt, ...roleResponse} = role;
+    const responseRole: UpdateRoleResponseDto = roleResponse;
+
+    jest.spyOn(service, 'update').mockResolvedValue(roleResponse);
+
+    const response = await controller.update(role.roleid.toString(), updateRoleDto);
+
+    expect(response).toEqual(responseRole);
+    expect(service.update).toHaveBeenCalledWith(role.roleid, updateRoleDto.name);
+    expect(service.update).toHaveBeenCalledTimes(1);
+  });
+
+  it('should be able to remove a role', async () => {
+    const {createdAt, ...roleResponse} = role;
+    const responseRole: UpdateRoleResponseDto = roleResponse;
+
+    jest.spyOn(service, 'remove').mockResolvedValue(responseRole);
+
+    const response = await controller.remove(role.roleid.toString());
+
+    expect(response).toEqual(responseRole);
+    expect(service.remove).toHaveBeenCalledWith(role.roleid);
+    expect(service.remove).toHaveBeenCalledTimes(1);
   });
 
 });
