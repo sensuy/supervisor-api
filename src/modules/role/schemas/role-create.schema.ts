@@ -7,8 +7,9 @@ export const roleCreateSchema = Joi.object({
   .string()
   .uuid()
   .allow(null)
+  .required()
   .messages({
-    'string.empty': `idfranchise cannot be an empty field`,
+    'string.empty': `idfranchise cannot be an empty field, change to null`,
     'string.guid': `idfranchise must be a UUID`,
     'any.required': `idfranchise is a required field`
   }),
@@ -17,8 +18,8 @@ export const roleCreateSchema = Joi.object({
   .uuid()
   .allow(null)
   .messages({
-    'string.empty': `idfranchise cannot be an empty field`,
-    'string.guid': `idfranchise must be a UUID`,
-    'any.required': `idfranchise is a required field`
+    'string.empty': `idschool cannot be an empty field, change to null`,
+    'string.guid': `idschool must be a UUID`,
+    'any.required': `idschool is a required field`
   }),
 });
