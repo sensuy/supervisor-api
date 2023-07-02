@@ -5,6 +5,7 @@ import { IRole, IRoleRepository } from './interfaces';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { Not } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
+import { ListRoleDto } from './dto/list-role.dto';
 
 describe('RoleService', () => {
   let service: RoleService;
@@ -70,9 +71,11 @@ describe('RoleService', () => {
 
   describe(RoleService.prototype.findAllFranchiseRoles, () => {
     it('Should be able to find all franchise roles', async () => {
-      jest.spyOn(roleRepository, 'findAllFranchiseRoles').mockResolvedValue([{ roleid: 1, name: 'test' }]);
+      const rolesFranchise: ListRoleDto[]  = [{ roleid: 1, name: 'test' }];
 
-      const result = await service.findAllFranchiseRoles('franchise-test');
+      jest.spyOn(roleRepository, 'findAllFranchiseRoles').mockResolvedValue(rolesFranchise);
+
+      const result: ListRoleDto[] = await service.findAllFranchiseRoles('franchise-test');
 
       expect(result).toEqual([{ roleid: 1, name: 'test' }]);
       expect(roleRepository.findAllFranchiseRoles).toHaveBeenCalledWith('franchise-test');
@@ -82,9 +85,10 @@ describe('RoleService', () => {
 
   describe(RoleService.prototype.findAllSchoolRoles, () => {
     it('Should be able to find all school roles', async () => {
-      jest.spyOn(roleRepository, 'findAllSchoolRoles').mockResolvedValue([{ roleid: 1, name: 'test' }]);
+      const rolesSchool: ListRoleDto[]  = [{ roleid: 1, name: 'test' }];
+      jest.spyOn(roleRepository, 'findAllSchoolRoles').mockResolvedValue(rolesSchool);
 
-      const result = await service.findAllSchoolRoles('school-test');
+      const result: ListRoleDto[] = await service.findAllSchoolRoles('school-test');
 
       expect(result).toEqual([{ roleid: 1, name: 'test' }]);
       expect(roleRepository.findAllSchoolRoles).toHaveBeenCalledWith('school-test');
