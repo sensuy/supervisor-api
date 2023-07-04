@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ParseIntPi
 import { RoleService } from './role.service';
 import { CreateRoleDto, CreateRoleResponseDto } from './dto/create-role.dto';
 import { UpdateRoleDto, UpdateRoleResponseDto } from './dto/update-role.dto';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '@shared/pipes/joi-validation.pipe';
 import { roleCreateSchema } from './schemas/role-create.schema';
 import { nameSchema } from './schemas/name.schema';
@@ -10,6 +10,7 @@ import { franchiseIdSchema } from './schemas/franchiseid.schema';
 import { schoolIdSchema } from './schemas/schoolid.schema';
 import { roleIdSchema } from './schemas/roleid.schema';
 import { ListRoleDto } from './dto/list-role.dto';
+import { NotFoundDto } from '@shared/errors';
 
 @ApiTags('Role')
 @Controller('role')
@@ -19,6 +20,14 @@ export class RoleController {
   @Post()
   @ApiOperation({
     summary: 'Create a new role'
+  })
+  @ApiCreatedResponse({
+    description: 'The role has been successfully created.',
+    type: CreateRoleResponseDto 
+  })
+  @ApiBadRequestResponse({
+    description: 'Validation failed.',
+    type: NotFoundDto
   })
   @UsePipes(new JoiValidationPipe(roleCreateSchema))
   create(@Body() createRoleDto: CreateRoleDto): Promise<CreateRoleResponseDto> {

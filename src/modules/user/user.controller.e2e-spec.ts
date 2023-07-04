@@ -29,7 +29,7 @@ describe('UserController (e2e)', () => {
   });
 
   afterAll(async () => {
-    await userRepository.delete({ email: createUser.email });
+    await userRepository.clear();
     await app.close();
   });
 

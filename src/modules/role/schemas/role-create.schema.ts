@@ -3,23 +3,26 @@ import { name } from './name.schema';
 
 export const roleCreateSchema = Joi.object({
   name,
-  idfranchise: Joi
-  .string()
-  .uuid()
-  .allow(null)
-  .required()
-  .messages({
-    'string.empty': `idfranchise cannot be an empty field, change to null`,
-    'string.guid': `idfranchise must be a UUID`,
-    'any.required': `idfranchise is a required field`
-  }),
-  idschool: Joi
-  .string()
-  .uuid()
-  .allow(null)
-  .messages({
-    'string.empty': `idschool cannot be an empty field, change to null`,
-    'string.guid': `idschool must be a UUID`,
-    'any.required': `idschool is a required field`
-  }),
+  franchiseid: Joi
+    .string()
+    .uuid()
+    .allow(null)
+    .required()
+    .messages({
+      'string.empty': `{#key} cannot be an empty field, change to null`,
+      'string.base': `{#key} must be of type string`,
+      'string.guid': `{#key} must be a UUID`,
+      'any.required': `{#key} is a required field`
+    }),
+  schoolid: Joi
+    .string()
+    .uuid()
+    .allow(null)
+    .required()
+    .messages({
+      'string.empty': `{#key} cannot be an empty field, change to null`,
+      'string.base': `{#key} must be of type string`,
+      'string.guid': `{#key} must be a UUID`,
+      'any.required': `{#key} is a required field`
+    }),
 });

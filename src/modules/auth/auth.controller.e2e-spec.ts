@@ -10,7 +10,6 @@ import { AuthResponseDto } from "./dto/auth-response.dto";
 import { JwtService } from "@nestjs/jwt";
 
 
-
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
   let userRepository: Repository<User>;
@@ -35,7 +34,7 @@ describe('AuthController (e2e)', () => {
   });
 
   afterAll(async () => {
-    await userRepository.delete({ email: createUser.email });
+    await userRepository.clear();
     await app.close();
   });
 

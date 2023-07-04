@@ -1,6 +1,6 @@
 
 import { RoleDto } from "./role.dto";
-import { IRoleCreatable } from "../interfaces";
+import { ICreateRoleResponse, IRoleCreatable } from "../interfaces";
 import { IntersectionType, OmitType, PartialType, PickType } from "@nestjs/swagger";
 
 export class CreateRoleDto extends IntersectionType(
@@ -10,5 +10,5 @@ export class CreateRoleDto extends IntersectionType(
 
 
 export class CreateRoleResponseDto extends IntersectionType(
-  OmitType(CreateRoleDto, ['updatedAt']),
-) {}
+  OmitType(RoleDto, ['updatedAt']),
+) implements ICreateRoleResponse {}
