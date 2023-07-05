@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ParseIntPi
 import { RoleService } from './role.service';
 import { CreateRoleDto, CreateRoleResponseDto } from './dto/create-role.dto';
 import { UpdateRoleDto, UpdateRoleResponseDto } from './dto/update-role.dto';
-import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '@shared/pipes/joi-validation.pipe';
 import { roleCreateSchema } from './schemas/role-create.schema';
 import { nameSchema } from './schemas/name.schema';
@@ -37,6 +37,10 @@ export class RoleController {
   @Get('franchise/:idfranchise')
   @ApiOperation({
     summary: 'List all roles by franchise'
+  })
+  @ApiOkResponse({
+    description: 'The roles has been successfully listed.',
+    type: ListRoleDto
   })
   @UsePipes(new JoiValidationPipe(franchiseIdSchema))
   findAllFranchiseRoles(

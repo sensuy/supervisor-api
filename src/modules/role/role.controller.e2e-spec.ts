@@ -272,4 +272,82 @@ describe('RoleController (e2e)', () => {
       });
     });
   });
+
+  describe('/role/franchise/:idfranchise (GET)', () => {
+    it('Should return an array of roles', async () => {
+      const response = await request(app.getHttpServer())
+        .get(`/role/franchise/${createRole.franchiseid}`)
+        .send();
+
+      expect(response.status).toBe(200);
+      // This length is 2 because the first role is created in the '/role (POST)' suite.
+      expect(response.body).toHaveLength(2);
+      expect(response.body).toContainEqual({
+        roleid: expect.any(Number),
+        name: createRole.name,
+      });
+    });
+
+    it('Should return an empty array if no roles are found', async () => {
+      const response = await request(app.getHttpServer())
+        .get(`/role/franchise/123e4567-e89b-12d3-a456-426614174000`)
+        .send();
+
+      expect(response.status).toBe(200);
+      expect(response.body).toStrictEqual([]);
+    });
+
+    it('Should trhow a Bad Request Exception if a franchiseid is not a valid uuid', async () => {
+      const response = await request(app.getHttpServer())
+        .get(`/role/franchise/fake-frachiseid`)
+        .send();
+
+      expect(response.status).toBe(400);
+      expect(response.body).toStrictEqual({
+        statusCode: 400,
+        message: "franchiseid must be a UUID",
+        error: "Bad Request"
+      });
+    });
+  });
+
+  describe('/role/school/:idschool (GET)', () => {
+    it('Should return an array of roles', async () => {
+      const response = await request(app.getHttpServer())
+        .get(`/role/school/${createRole.schoolid}`)
+        .send();
+
+      expect(response.status).toBe(200);
+      // This length is 2 because the first role is created in the '/role (POST)' suite.
+      expect(response.body).toHaveLength(2);
+      expect(response.body).toContainEqual({
+        roleid: expect.any(Number),
+        name: createRole.name,
+      });
+    });
+
+    it('Should return an empty array if no roles are found', async () => {
+      const response = await request(app.getHttpServer())
+        .get(`/role/school/123e4567-e89b-12d3-a456-426614174000`)
+        .send();
+
+      expect(response.status).toBe(200);
+      expect(response.body).toStrictEqual([]);
+    });
+
+    it('Should trhow a Bad Request Exception if a schoolid is not a valid uuid', async () => {
+      const response = await request(app.getHttpServer())
+        .get(`/role/school/fake-schoolid`)
+        .send();
+
+      expect(response.status).toBe(400);
+      expect(response.body).toStrictEqual({
+        statusCode: 400,
+        message: "schoolid must be a UUID",
+        error: "Bad Request"
+      });
+    });
+  });
+
+  
 });
