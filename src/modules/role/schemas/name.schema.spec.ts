@@ -39,7 +39,7 @@ describe('name', () => {
       name: 'ab'
     };
     const { error } = nameSchema.validate(input);
-    expect(error.message).toEqual('name should have a minimum length of 3');
+    expect(error.message).toEqual('name cannot be shorter than 3 characters');
   });
 
   it('should not be able to validate a name with more than 50 characters', () => {
@@ -47,6 +47,6 @@ describe('name', () => {
       name: 'a'.repeat(51)
     };
     const { error } = nameSchema.validate(input);
-    expect(error.message).toEqual('name should have a maximum length of 50');
+    expect(error.message).toEqual('name cannot be longer than 50 characters');
   });
 });

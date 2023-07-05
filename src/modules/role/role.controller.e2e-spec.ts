@@ -5,7 +5,7 @@ import { getRepositoryToken } from "@nestjs/typeorm";
 import * as request from 'supertest';
 import { AppModule } from "../../app.module";
 import { Role } from "./repositories/typeorm/role.entity";
-import { IRole, IRoleCreatable } from "./interfaces";
+import { ICreateRoleResponse,  IRoleCreatable } from "./interfaces";
 
 
 describe('RoleController (e2e)', () => {
@@ -17,6 +17,9 @@ describe('RoleController (e2e)', () => {
     franchiseid: 'f0a5e3c0-6c7b-11eb-9439-0242ac130001',
     schoolid: 'f0a5e3c0-6c7b-11eb-9439-0242ac130003'
   };
+
+
+  let createdRoleDto: ICreateRoleResponse;
 
 
 
@@ -41,6 +44,8 @@ describe('RoleController (e2e)', () => {
       const response = await request(app.getHttpServer())
         .post('/role')
         .send(createRole);
+
+      createdRoleDto = response.body;
 
       expect(response.status).toBe(201);
       expect(response.body).toMatchObject({
@@ -80,7 +85,7 @@ describe('RoleController (e2e)', () => {
         expect(response.status).toBe(400);
         expect(response.body).toStrictEqual({
           statusCode: 400,
-          message: "name should have a minimum length of 3",
+          message: "name cannot be shorter than 3 characters",
           error: "Bad Request"
         });
       });
@@ -96,7 +101,7 @@ describe('RoleController (e2e)', () => {
         expect(response.status).toBe(400);
         expect(response.body).toStrictEqual({
           statusCode: 400,
-          message: "name should have a maximum length of 50",
+          message: "name cannot be longer than 50 characters",
           error: "Bad Request"
         });
       });
@@ -349,5 +354,159 @@ describe('RoleController (e2e)', () => {
     });
   });
 
-  
+  describe('/role/:roleid (PATCH)', () => {
+    it('Should be able to update a role', async () => {
+      const response = await request(app.getHttpServer())
+        .patch(`/role/${createdRoleDto.roleid}`)
+        .send({
+          name: 'new tester name'
+        });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toMatchObject({
+        roleid: expect.any(Number),
+        name: 'new tester name',
+        franchiseid: createRole.franchiseid,
+        schoolid: createRole.schoolid,
+        active: true
+      });
+    });
+
+    it('Should trhow a Bad Request Exception if a roleid is not valid', async () => {
+      const response = await request(app.getHttpServer())
+        .patch(`/role/fake-roleid`)
+        .send({
+          name: 'new name'
+        });
+
+      expect(response.status).toBe(400);
+      expect(response.body).toStrictEqual({
+        statusCode: 400,
+        message: "roleid should be a type of number",
+        error: "Bad Request"
+      });
+    });
+
+    it('Should trhow a Not Found Exception if a roleid is missing', async () => {
+      const response = await request(app.getHttpServer())
+        .patch(`/role`)
+        .send({
+          name: 'new name'
+        });
+
+      expect(response.status).toBe(404);
+      expect(response.body).toStrictEqual({
+        statusCode: 404,
+        message: "Cannot PATCH /role",
+        error: "Not Found"
+      });
+    });
+
+    describe('name validation', () => {
+      it('Should trhow a Bad Request Exception if a role name is not a string', async () => {
+        const response = await request(app.getHttpServer())
+          .patch(`/role/${createdRoleDto.roleid}`)
+          .send({
+            name: 123
+          });
+
+        expect(response.status).toBe(400);
+        expect(response.body).toStrictEqual({
+          statusCode: 400,
+          message: "name should be a type of text",
+          error: "Bad Request"
+        });
+      });
+
+      it('Should trhow a Bad Request Exception if a role name is empty', async () => {
+        const response = await request(app.getHttpServer())
+          .patch(`/role/${createdRoleDto.roleid}`)
+          .send({
+            name: ''
+          });
+
+        expect(response.status).toBe(400);
+        expect(response.body).toStrictEqual({
+          statusCode: 400,
+          message: "name cannot be an empty field",
+          error: "Bad Request"
+        });
+
+      });
+
+      it('Should trhow a Bad Request Exception if a role name is longer than 50 characters', async () => {
+        const response = await request(app.getHttpServer())
+          .patch(`/role/${createdRoleDto.roleid}`)
+          .send({
+            name: 'a'.repeat(51)
+          });
+
+        expect(response.status).toBe(400);
+        expect(response.body).toStrictEqual({
+          statusCode: 400,
+          message: "name cannot be longer than 50 characters",
+          error: "Bad Request"
+        });
+      });
+
+      it('Should trhow a Bad Request Exception if a role name is shorter than 3 characters', async () => {
+        const response = await request(app.getHttpServer())
+          .patch(`/role/${createdRoleDto.roleid}`)
+          .send({
+            name: 'aa'
+          });
+
+        expect(response.status).toBe(400);
+        expect(response.body).toStrictEqual({
+          statusCode: 400,
+          message: "name cannot be shorter than 3 characters",
+          error: "Bad Request"
+        });
+      });
+
+    });
+  });
+
+  describe('/role/:roleid (DELETE)', () => {
+    it('Should be able to delete a role', async () => {
+      const response = await request(app.getHttpServer())
+        .delete(`/role/${createdRoleDto.roleid}`)
+        .send();
+
+      expect(response.status).toBe(200);
+      expect(response.body).toMatchObject({
+        roleid: expect.any(Number),
+        name: 'new tester name',
+        franchiseid: createRole.franchiseid,
+        schoolid: createRole.schoolid,
+        active: false
+      });
+    });
+
+    it('Should trhow a Bad Request Exception if a roleid is not valid', async () => {
+      const response = await request(app.getHttpServer())
+        .delete(`/role/fake-roleid`)
+        .send();
+
+      expect(response.status).toBe(400);
+      expect(response.body).toStrictEqual({
+        statusCode: 400,
+        message: "roleid should be a type of number",
+        error: "Bad Request"
+      });
+    });
+
+    it('Should trhow a Not Found Exception if a roleid is missing', async () => {
+      const response = await request(app.getHttpServer())
+        .delete(`/role`)
+        .send();
+
+      expect(response.status).toBe(404);
+      expect(response.body).toStrictEqual({
+        statusCode: 404,
+        message: "Cannot DELETE /role",
+        error: "Not Found"
+      });
+    });
+  });
 });

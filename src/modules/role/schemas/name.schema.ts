@@ -10,8 +10,8 @@ export const name = Joi
   .messages({
     'string.base': `{#key} should be a type of text`,
     'string.empty': `{#key} cannot be an empty field`,
-    'string.min': `{#key} should have a minimum length of {#limit}`,
-    'string.max': `{#key} should have a maximum length of {#limit}`,
+    'string.min': `{#key} cannot be shorter than {#limit} characters`,
+    'string.max': `{#key} cannot be longer than {#limit} characters`,
     'any.required': `{#key} is a required field`
   });
 
