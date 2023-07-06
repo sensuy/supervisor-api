@@ -1,21 +1,31 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmConfig } from './config/typeorm.config';
-import { UserModule } from './modules/auth/user.module';
+import {  typeormConfig } from './config/typeorm.config';
 import { ProviderModule } from './providers/provider.module';
+import { jwtConfig } from '@config/jwt.config';
+import { UserModule } from '@modules/user/user.module';
+import { AuthModule } from '@modules/auth/auth.module';
+import { RoleModule } from './modules/role/role.module';
 
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [],
+      envFilePath: [`.env.${process.env.NODE_ENV}`],
+      load: [typeormConfig, jwtConfig],
     }),
-    TypeOrmModule.forRootAsync({ useClass: TypeOrmConfig }),
+    TypeOrmModule.forRootAsync({ 
+      inject: [typeormConfig.KEY],
+      useFactory: async (config: ConfigType<typeof typeormConfig>) => config,
+     }),
     ProviderModule,
-    UserModule
+    AuthModule,
+    UserModule,
+    RoleModule
   ],
   providers: [],
+  controllers: [],
 })
 export class AppModule { }

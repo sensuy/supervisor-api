@@ -9,6 +9,8 @@ export default {
     'src/main.ts',
     'src/config/*',
     '/src/.*\\.module\\.ts$',
+    '/src/.*\\.decorator\\.ts$',
+    '/src/.*\\.guard\\.ts$',
     '/src/.*\\.e2e-spec\\.ts$',
     '.*interfaces.*',
     '.*repositories.*',

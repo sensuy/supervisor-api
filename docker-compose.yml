@@ -9,7 +9,7 @@ services:
       - "3001:3001"
     entrypoint: wait-for postgres:5432 -t 40  -- ./start.sh
     env_file:
-      - .env
+      - .env.development
     volumes:
       - .:/app
       - /app/node_modules
