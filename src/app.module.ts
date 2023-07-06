@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmConfig } from './config/typeorm.config';
+import {  typeormConfig } from './config/typeorm.config';
 import { ProviderModule } from './providers/provider.module';
-import { AuthModule } from '@modules/auth/auth.module';
 import { jwtConfig } from '@config/jwt.config';
-import typeormMigrationConfig from '@config/typeorm-migration.config';
-import { serverConfig } from '@config/server.config';
-import { PassportModule } from '@nestjs/passport';
+import { UserModule } from '@modules/user/user.module';
+import { AuthModule } from '@modules/auth/auth.module';
+import { RoleModule } from './modules/role/role.module';
 
 
 @Module({
@@ -15,11 +14,16 @@ import { PassportModule } from '@nestjs/passport';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: [`.env.${process.env.NODE_ENV}`],
-      load: [jwtConfig],
+      load: [typeormConfig, jwtConfig],
     }),
-    TypeOrmModule.forRootAsync({ useClass: TypeOrmConfig }),
+    TypeOrmModule.forRootAsync({ 
+      inject: [typeormConfig.KEY],
+      useFactory: async (config: ConfigType<typeof typeormConfig>) => config,
+     }),
     ProviderModule,
-    AuthModule
+    AuthModule,
+    UserModule,
+    RoleModule
   ],
   providers: [],
   controllers: [],

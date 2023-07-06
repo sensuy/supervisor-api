@@ -5,14 +5,6 @@ import { ICommonEntity } from "@shared/interfaces";
 export class CommonEntityDto implements ICommonEntity {
   @ApiProperty({
     type: 'string',
-    format: 'uuid',
-    title: 'id',
-    description: 'Unique identifier for the record',
-  })
-  id: string;
-
-  @ApiProperty({
-    type: 'string',
     format: 'date-time',
     title: 'Created At',
     description: 'The date and time at which the resource was created.',
@@ -26,4 +18,10 @@ export class CommonEntityDto implements ICommonEntity {
     description: 'The date and time at which the resource was updated',
   })
   updatedAt: Date;
+
+  @ApiProperty({
+    title: 'Active',
+    description: 'The flag to inform if this register is active or not.',
+  })
+  active: boolean;
 }
