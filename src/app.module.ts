@@ -7,6 +7,7 @@ import { jwtConfig } from '@config/jwt.config';
 import { UserModule } from '@modules/user/user.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { RoleModule } from './modules/role/role.module';
+import { PermissionModule } from './modules/permission/permission.module';
 
 
 @Module({
@@ -23,7 +24,8 @@ import { RoleModule } from './modules/role/role.module';
     ProviderModule,
     AuthModule,
     UserModule,
-    RoleModule
+    RoleModule,
+    PermissionModule
   ],
   providers: [],
   controllers: [],
