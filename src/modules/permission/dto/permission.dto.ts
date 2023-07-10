@@ -7,6 +7,7 @@ import {
   PERMISSION_LABEL_MAX_LENGTH,
   PERMISSION_LABEL_MIN_LENGTH
 } from "../constants/permission.constants";
+import { PermissionOriginEnum } from "../enum/permission-type.enum";
 
 
 
@@ -14,12 +15,11 @@ export class PermissionDto
   extends CommonEntityDto
   implements IPermission {
   @ApiProperty({
-    type: 'string',
     title: 'permissionid',
     minLength: PERMISSION_ID_MIN_LENGTH,
     maxLength: PERMISSION_ID_MAX_LENGTH,
     description: 'Unique identifier for the permission',
-    example: 'FRANCHISE_SCHOOL_CREATE'
+    example: 'CREATE_SCHOOL'
   })
   permissionid: string;
 
@@ -31,4 +31,12 @@ export class PermissionDto
     example: 'Create Franchise\'s School'
   })
   label: string;
+
+  @ApiProperty({
+    title: 'type',
+    description: 'The type of permission',
+    example: 'FRANCHISE'
+  })
+  type: PermissionOriginEnum;
+
 }
