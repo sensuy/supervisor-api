@@ -48,15 +48,13 @@ describe('PermissionController', () => {
     }
 
     jest.spyOn(service, 'create').mockResolvedValue(createPermissionResult);
-  
 
     const result = await controller.create(createPermissionDto);
 
     expect(result).toEqual(createPermissionResult);
     expect(service.create).toHaveBeenCalledWith(createPermissionDto);
     expect(service.create).toHaveBeenCalledTimes(1);
-    
-
+  
   });
 
 
