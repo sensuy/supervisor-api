@@ -1,8 +1,8 @@
 import { Body, Controller, Post, UsePipes } from '@nestjs/common';
 import { PermissionService } from './permission.service';
 import { CreatePermissionDto, CreatePermissionResponseDto } from './dto/create-role.dto';
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { BadRequestDto } from '@shared/errors';
+import { ApiBadRequestResponse, ApiConflictResponse, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { BadRequestDto, ConflictDto } from '@shared/errors';
 import { JoiValidationPipe } from '@shared/pipes/joi-validation.pipe';
 import { PermissionCreateSchema } from './schemas/create-permision.schema';
 
@@ -22,6 +22,10 @@ export class PermissionController {
   @ApiBadRequestResponse({
     description: 'Validation failed.',
     type: BadRequestDto
+  })
+  @ApiConflictResponse({
+    description: 'Permission already exists',
+    type: ConflictDto
   })
   @UsePipes(new JoiValidationPipe(PermissionCreateSchema))
   async create(

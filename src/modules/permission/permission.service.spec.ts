@@ -1,18 +1,75 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PermissionService } from './permission.service';
+import { IPERMISSION_REPOSITORY } from './constants/permission.constants';
+import { IPermissionRepository } from './interfaces/permission-repository.interface';
+import { CreatePermissionDto, CreatePermissionResponseDto } from './dto/create-role.dto';
+import { PermissionOriginEnum } from './enum/permission-type.enum';
+import { IPermission } from './interfaces/permission.interface';
+import { Permission } from './repositories/typeorm/permission.entity';
 
 describe('PermissionService', () => {
   let service: PermissionService;
+  let permissionRepository: IPermissionRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PermissionService],
+      providers: [
+        PermissionService,
+        {
+          provide: IPERMISSION_REPOSITORY,
+          useValue: {
+            create: jest.fn(),
+            save: jest.fn(),
+            findOne: jest.fn()
+          }
+        }
+      ],
     }).compile();
 
     service = module.get<PermissionService>(PermissionService);
+    permissionRepository = module.get<IPermissionRepository>(IPERMISSION_REPOSITORY);
   });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
+
+  describe(PermissionService.prototype.create, () => {
+    const createPermissionDto: CreatePermissionDto = {
+      permissionid: 'test',
+      label: 'test',
+      type: PermissionOriginEnum.FRANCHISE
+    }
+
+    const createPermissionResult: Permission = {
+      permissionid: 'test',
+      label: 'test',
+      type: PermissionOriginEnum.FRANCHISE,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      active: true
+    }
+
+    it('should be able to create a permission', async () => {
+      jest.spyOn(permissionRepository, 'save').mockResolvedValue(createPermissionResult);
+
+      const result = await service.create(createPermissionDto);
+
+      const { updatedAt, ...response } = createPermissionResult;
+
+      expect(result).toEqual(response);
+      expect(permissionRepository.create).toHaveBeenCalledWith(createPermissionDto);
+      expect(permissionRepository.create).toHaveBeenCalledTimes(1);
+      expect(permissionRepository.save).toHaveBeenCalledTimes(1);
+    });
+
+    it('should throw an error if the permission already exists', async () => {
+      jest.spyOn(permissionRepository, 'findOne').mockResolvedValue(createPermissionResult);
+
+      await expect(service.create(createPermissionDto)).rejects.toThrowError('Permission already exists');
+      expect(permissionRepository.findOne).toHaveBeenCalledWith(createPermissionDto.permissionid);
+      expect(permissionRepository.findOne).toHaveBeenCalledTimes(1);
+    });
+  });
+
 });
