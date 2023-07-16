@@ -18,10 +18,7 @@ describe('RoleController (e2e)', () => {
     schoolid: 'f0a5e3c0-6c7b-11eb-9439-0242ac130003'
   };
 
-
   let createdRoleDto: ICreateRoleResponse;
-
-
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({

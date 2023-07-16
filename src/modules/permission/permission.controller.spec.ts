@@ -3,7 +3,6 @@ import { PermissionController } from './permission.controller';
 import { PermissionService } from './permission.service';
 import { CreatePermissionDto, CreatePermissionResponseDto } from './dto/create-role.dto';
 import { PermissionOriginEnum } from './enum/permission-type.enum';
-import exp from 'constants';
 
 
 
@@ -56,6 +55,4 @@ describe('PermissionController', () => {
     expect(service.create).toHaveBeenCalledTimes(1);
   
   });
-
-
 });

@@ -57,6 +57,17 @@ describe('create permission validation', () => {
       expect(error.message).toEqual('permissionid should only contain uppercase letters and underlines');
     });
 
+    it('should not be able to validate if permission has some space', () => {
+      const input = {
+        permissionid: 'CREATE FRANCHISE',
+        label: 'Create franchise',
+        type: 'FRANCHISE'
+      };
+      const { error } = PermissionCreateSchema.validate(input);
+
+      expect(error.message).toEqual('permissionid should only contain uppercase letters and underlines');
+    });
+
     it('should not be able to validate a permissionid with less than 5 characters', () => {
       const input = {
         permissionid: 'AA',
