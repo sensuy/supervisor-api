@@ -18,9 +18,6 @@ export class PermissionService {
 
     const permission = await this.permissionRepository.findOne(createPermissionDto.permissionid);
 
-    console.log({ permission });
-
-
     if (permission) {
       throw new ConflictException('Permission already exists');
     }
