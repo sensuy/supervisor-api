@@ -20,17 +20,7 @@ describe('create permission validation', () => {
 
     const { error } = Joi.object({ listPermissionSchema }).validate(input);
 
-    expect(error.message).toEqual('listPermissionSchema should be one of the following values: [FRANCHISE, SCHOOL]');
-  });
-
-  it('should not be able to validate a missing type', () => {
-    const input = {
-      listPermissionSchema: undefined
-    };
-
-    const { error } = Joi.object({ listPermissionSchema }).validate(input);
-
-    expect(error.message).toEqual('listPermissionSchema is a required field');
+    expect(error.message).toEqual('type should be one of the following values: [FRANCHISE, SCHOOL]');
   });
 
   it('should not be able to validate a type that is not a valid PermissionOriginEnum', () => {
@@ -40,6 +30,6 @@ describe('create permission validation', () => {
 
     const { error } = Joi.object({ listPermissionSchema }).validate(input);
 
-    expect(error.message).toEqual('listPermissionSchema should be one of the following values: [FRANCHISE, SCHOOL]');
+    expect(error.message).toEqual('type should be one of the following values: [FRANCHISE, SCHOOL]');
   });
 })

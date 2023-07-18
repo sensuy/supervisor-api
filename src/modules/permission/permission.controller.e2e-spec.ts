@@ -317,5 +317,33 @@ describe('PermissionController (e2e)', () => {
     });
   });
 
-  describe('/permission/:type (GET)', () => {});
+  describe('/permission/:type (GET)', () => {
+
+    it('should be able to get all permissions by type', async () => {
+      const response = await request(app.getHttpServer())
+        .get('/permission/FRANCHISE')
+        .send();
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(expect.arrayContaining([
+        expect.objectContaining({
+          label: 'Create franchise',
+          permissionid: 'CREATE_FRANCHISE'
+        })
+      ]));
+    });
+
+    it('should not be able to get all permissions by type if type is invalid', async () => {
+      const response = await request(app.getHttpServer())
+        .get('/permission/INVALID')
+        .send();
+
+      expect(response.status).toBe(400);
+      expect(response.body).toEqual({
+        statusCode: 400,
+        message: 'type should be one of the following values: [FRANCHISE, SCHOOL]',
+        error: 'Bad Request'
+      });
+    });
+  });
 });
