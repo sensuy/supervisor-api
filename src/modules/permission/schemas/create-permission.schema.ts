@@ -12,7 +12,7 @@ export const MessagesSchema = Joi.object().messages({
   'string.pattern.base': `{#key} should only contain uppercase letters and underlines`,
 })
 
-export const PermissionCreateSchema = Joi.object({
+export const CreatePermissionSchema = Joi.object({
   permissionid: Joi
     .string()
     .regex(/^[A-Z_]*$/)

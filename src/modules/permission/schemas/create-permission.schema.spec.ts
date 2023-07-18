@@ -1,4 +1,5 @@
-import { PermissionCreateSchema } from "./create-permision.schema";
+import { CreatePermissionSchema } from "./create-permission.schema";
+
 
 describe('create permission validation', () => {
   it('should be able to validate a correct permission', () => {
@@ -8,7 +9,7 @@ describe('create permission validation', () => {
       type: 'FRANCHISE'
     };
 
-    const result = PermissionCreateSchema.validate(input);
+    const result = CreatePermissionSchema.validate(input);
 
     expect(result.error).toBeUndefined();
   });
@@ -20,7 +21,7 @@ describe('create permission validation', () => {
         label: 'Create franchise',
         type: 'FRANCHISE'
       };
-      const { error } = PermissionCreateSchema.validate(input);
+      const { error } = CreatePermissionSchema.validate(input);
 
       expect(error.message).toEqual('permissionid cannot be an empty field');
     });
@@ -30,7 +31,7 @@ describe('create permission validation', () => {
         label: 'Create franchise',
         type: 'FRANCHISE'
       };
-      const { error } = PermissionCreateSchema.validate(input);
+      const { error } = CreatePermissionSchema.validate(input);
       expect(error.message).toEqual('permissionid is a required field');
     });
 
@@ -40,7 +41,7 @@ describe('create permission validation', () => {
         label: 'Create franchise',
         type: 'FRANCHISE'
       };
-      const { error } = PermissionCreateSchema.validate(input);
+      const { error } = CreatePermissionSchema.validate(input);
 
       expect(error.message).toEqual('permissionid should be a type of text');
     });
@@ -52,7 +53,7 @@ describe('create permission validation', () => {
         type: 'FRANCHISE'
       };
 
-      const { error } = PermissionCreateSchema.validate(input);
+      const { error } = CreatePermissionSchema.validate(input);
 
       expect(error.message).toEqual('permissionid should only contain uppercase letters and underlines');
     });
@@ -63,7 +64,7 @@ describe('create permission validation', () => {
         label: 'Create franchise',
         type: 'FRANCHISE'
       };
-      const { error } = PermissionCreateSchema.validate(input);
+      const { error } = CreatePermissionSchema.validate(input);
 
       expect(error.message).toEqual('permissionid should only contain uppercase letters and underlines');
     });
@@ -74,7 +75,7 @@ describe('create permission validation', () => {
         label: 'Create franchise',
         type: 'FRANCHISE'
       };
-      const { error } = PermissionCreateSchema.validate(input);
+      const { error } = CreatePermissionSchema.validate(input);
       expect(error.message).toEqual('permissionid cannot be shorter than 5 characters');
     });
 
@@ -84,7 +85,7 @@ describe('create permission validation', () => {
         label: 'Create franchise',
         type: 'FRANCHISE'
       };
-      const { error } = PermissionCreateSchema.validate(input);
+      const { error } = CreatePermissionSchema.validate(input);
       expect(error.message).toEqual('permissionid cannot be longer than 100 characters');
     });
   });
@@ -96,7 +97,7 @@ describe('create permission validation', () => {
         label: '',
         type: 'FRANCHISE'
       };
-      const { error } = PermissionCreateSchema.validate(input);
+      const { error } = CreatePermissionSchema.validate(input);
 
       expect(error.message).toEqual('label cannot be an empty field');
     });
@@ -106,7 +107,7 @@ describe('create permission validation', () => {
         permissionid: 'CREATE_FRANCHISE',
         type: 'FRANCHISE'
       };
-      const { error } = PermissionCreateSchema.validate(input);
+      const { error } = CreatePermissionSchema.validate(input);
       expect(error.message).toEqual('label is a required field');
     });
 
@@ -116,7 +117,7 @@ describe('create permission validation', () => {
         label: 123,
         type: 'FRANCHISE'
       };
-      const { error } = PermissionCreateSchema.validate(input);
+      const { error } = CreatePermissionSchema.validate(input);
 
       expect(error.message).toEqual('label should be a type of text');
     });
@@ -127,7 +128,7 @@ describe('create permission validation', () => {
         label: 'AA',
         type: 'FRANCHISE'
       };
-      const { error } = PermissionCreateSchema.validate(input);
+      const { error } = CreatePermissionSchema.validate(input);
       expect(error.message).toEqual('label cannot be shorter than 5 characters');
     });
 
@@ -137,7 +138,7 @@ describe('create permission validation', () => {
         label: 'A'.repeat(101),
         type: 'FRANCHISE'
       };
-      const { error } = PermissionCreateSchema.validate(input);
+      const { error } = CreatePermissionSchema.validate(input);
       expect(error.message).toEqual('label cannot be longer than 100 characters');
     });
   });
@@ -149,7 +150,7 @@ describe('create permission validation', () => {
         label: 'Create franchise',
         type: ''
       };
-      const { error } = PermissionCreateSchema.validate(input);
+      const { error } = CreatePermissionSchema.validate(input);
 
       expect(error.message).toEqual('type should be one of the following values: [FRANCHISE, SCHOOL]');
     });
@@ -159,7 +160,7 @@ describe('create permission validation', () => {
         permissionid: 'CREATE_FRANCHISE',
         label: 'Create franchise',
       };
-      const { error } = PermissionCreateSchema.validate(input);
+      const { error } = CreatePermissionSchema.validate(input);
       expect(error.message).toEqual('type is a required field');
     });
 
@@ -169,7 +170,7 @@ describe('create permission validation', () => {
         label: 'Create franchise',
         type: 'test-permission-type'
       };
-      const { error } = PermissionCreateSchema.validate(input);
+      const { error } = CreatePermissionSchema.validate(input);
 
       expect(error.message).toEqual('type should be one of the following values: [FRANCHISE, SCHOOL]');
     });

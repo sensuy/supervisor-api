@@ -2,10 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PermissionService } from './permission.service';
 import { IPERMISSION_REPOSITORY } from './constants/permission.constants';
 import { IPermissionRepository } from './interfaces/permission-repository.interface';
-import { CreatePermissionDto, CreatePermissionResponseDto } from './dto/create-role.dto';
 import { PermissionOriginEnum } from './enum/permission-type.enum';
-import { IPermission } from './interfaces/permission.interface';
 import { Permission } from './repositories/typeorm/permission.entity';
+import { CreatePermissionDto } from './dto/create-permission.dto';
 
 describe('PermissionService', () => {
   let service: PermissionService;

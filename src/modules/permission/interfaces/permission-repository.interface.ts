@@ -1,4 +1,4 @@
-import { CreatePermissionDto, CreatePermissionResponseDto } from "../dto/create-role.dto";
+import { CreatePermissionDto } from "../dto/create-permission.dto";
 import { Permission } from "../repositories/typeorm/permission.entity";
 
 

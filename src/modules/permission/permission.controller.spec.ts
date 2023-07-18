@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PermissionController } from './permission.controller';
 import { PermissionService } from './permission.service';
-import { CreatePermissionDto, CreatePermissionResponseDto } from './dto/create-role.dto';
 import { PermissionOriginEnum } from './enum/permission-type.enum';
+import { CreatePermissionDto, CreatePermissionResponseDto } from './dto/create-permission.dto';
+import { ListPermissionDto } from './dto/list-permission.dto';
 
 
 
@@ -14,13 +15,14 @@ describe('PermissionController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [PermissionController],
       providers: [
-        { 
+        {
           provide: PermissionService,
           useValue: {
-            create: jest.fn()
+            create: jest.fn(),
+            list: jest.fn()
           }
         }
-        ],
+      ],
     }).compile();
 
     controller = module.get<PermissionController>(PermissionController);
@@ -53,6 +55,22 @@ describe('PermissionController', () => {
     expect(result).toEqual(createPermissionResult);
     expect(service.create).toHaveBeenCalledWith(createPermissionDto);
     expect(service.create).toHaveBeenCalledTimes(1);
-  
+  });
+
+  it('should be able to list all permissions of a given type', async () => {
+    const listPermissions: ListPermissionDto[] = [
+      {
+        permissionid: 'CREATE_FRANCHISE',
+        label: 'Create Franchise'
+      }
+    ]
+
+    jest.spyOn(service, 'list').mockResolvedValue(listPermissions);
+
+    const result = await controller.list(PermissionOriginEnum.FRANCHISE);
+
+    expect(result).toEqual(listPermissions);
+    expect(service.list).toHaveBeenCalledWith(PermissionOriginEnum.FRANCHISE);
+    expect(service.list).toHaveBeenCalledTimes(1);
   });
 });

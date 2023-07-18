@@ -1,10 +1,9 @@
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
-import {
-  CreatePermissionDto,
-  CreatePermissionResponseDto
-} from './dto/create-role.dto';
 import { IPERMISSION_REPOSITORY } from './constants/permission.constants';
 import { IPermissionRepository } from './interfaces/permission-repository.interface';
+import { CreatePermissionDto, CreatePermissionResponseDto } from './dto/create-permission.dto';
+import { ListPermissionDto } from './dto/list-permission.dto';
+import { PermissionOriginEnum } from './enum/permission-type.enum';
 
 @Injectable()
 export class PermissionService {
@@ -29,5 +28,9 @@ export class PermissionService {
     const { updatedAt, ...response } = permissionSaved;
 
     return response;
+  }
+
+  async list(type: PermissionOriginEnum): Promise<ListPermissionDto[]> {
+    return []
   }
 }
