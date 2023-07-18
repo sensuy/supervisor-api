@@ -2,6 +2,7 @@ import { DataSource } from "typeorm";
 import { config } from 'dotenv';
 import { User } from "@modules/user/repositories/typeorm/user.entity";
 import { Role } from "@modules/role/repositories/typeorm/role.entity";
+import { Permission } from "@modules/permission/repositories/typeorm/permission.entity";
 
 config();
 
@@ -17,6 +18,6 @@ export default new DataSource({
   logging: false,
   synchronize: false,
   name: 'default',
-  entities: [User, Role],
+  entities: [User, Role, Permission],
   migrations: ['./dist/src/shared/migrations/*{.ts,.js}']
 });
