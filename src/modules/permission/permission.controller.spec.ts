@@ -19,7 +19,7 @@ describe('PermissionController', () => {
           provide: PermissionService,
           useValue: {
             create: jest.fn(),
-            list: jest.fn()
+            listPermissionByType: jest.fn()
           }
         }
       ],
@@ -65,12 +65,12 @@ describe('PermissionController', () => {
       }
     ]
 
-    jest.spyOn(service, 'list').mockResolvedValue(listPermissions);
+    jest.spyOn(service, 'listPermissionByType').mockResolvedValue(listPermissions);
 
     const result = await controller.list(PermissionOriginEnum.FRANCHISE);
 
     expect(result).toEqual(listPermissions);
-    expect(service.list).toHaveBeenCalledWith(PermissionOriginEnum.FRANCHISE);
-    expect(service.list).toHaveBeenCalledTimes(1);
+    expect(service.listPermissionByType).toHaveBeenCalledWith(PermissionOriginEnum.FRANCHISE);
+    expect(service.listPermissionByType).toHaveBeenCalledTimes(1);
   });
 });

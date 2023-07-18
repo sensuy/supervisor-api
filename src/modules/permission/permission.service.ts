@@ -30,7 +30,7 @@ export class PermissionService {
     return response;
   }
 
-  async list(type: PermissionOriginEnum): Promise<ListPermissionDto[]> {
-    return []
+  async listPermissionByType(type: PermissionOriginEnum): Promise<ListPermissionDto[]> {
+    return this.permissionRepository.listPermissionByType(type);
   }
 }

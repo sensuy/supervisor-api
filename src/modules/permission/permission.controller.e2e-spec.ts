@@ -5,8 +5,8 @@ import { getRepositoryToken } from "@nestjs/typeorm";
 import * as request from 'supertest';
 import { AppModule } from "../../app.module";
 import { Permission } from "./repositories/typeorm/permission.entity";
-import { CreatePermissionDto, CreatePermissionResponseDto } from "./dto/create-role.dto";
 import { PermissionOriginEnum } from "./enum/permission-type.enum";
+import { CreatePermissionDto, CreatePermissionResponseDto } from "./dto/create-permission.dto";
 
 
 describe('PermissionController (e2e)', () => {
@@ -316,4 +316,6 @@ describe('PermissionController (e2e)', () => {
       });
     });
   });
+
+  describe('/permission/:type (GET)', () => {});
 });

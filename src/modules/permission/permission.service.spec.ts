@@ -5,6 +5,7 @@ import { IPermissionRepository } from './interfaces/permission-repository.interf
 import { PermissionOriginEnum } from './enum/permission-type.enum';
 import { Permission } from './repositories/typeorm/permission.entity';
 import { CreatePermissionDto } from './dto/create-permission.dto';
+import { ListPermissionDto } from './dto/list-permission.dto';
 
 describe('PermissionService', () => {
   let service: PermissionService;
@@ -19,7 +20,8 @@ describe('PermissionService', () => {
           useValue: {
             create: jest.fn(),
             save: jest.fn(),
-            findOne: jest.fn()
+            findOne: jest.fn(),
+            listPermissionByType: jest.fn()
           }
         }
       ],
@@ -68,6 +70,26 @@ describe('PermissionService', () => {
       await expect(service.create(createPermissionDto)).rejects.toThrowError('Permission already exists');
       expect(permissionRepository.findOne).toHaveBeenCalledWith(createPermissionDto.permissionid);
       expect(permissionRepository.findOne).toHaveBeenCalledTimes(1);
+    });
+  });
+
+
+  describe(PermissionService.prototype.listPermissionByType, () => {
+    const listPermissionResult: ListPermissionDto[] = [
+      {
+        permissionid: 'test',
+        label: 'test',
+      }
+    ]
+
+    it('should be able to list all franchise active permissions of a given type', async () => {
+      jest.spyOn(permissionRepository, 'listPermissionByType').mockResolvedValue(listPermissionResult);
+
+      const result = await service.listPermissionByType(PermissionOriginEnum.FRANCHISE);
+
+      expect(result).toEqual(listPermissionResult);
+      expect(permissionRepository.listPermissionByType).toHaveBeenCalledWith(PermissionOriginEnum.FRANCHISE);
+      expect(permissionRepository.listPermissionByType).toHaveBeenCalledTimes(1);
     });
   });
 

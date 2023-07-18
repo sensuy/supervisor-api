@@ -54,7 +54,7 @@ export class PermissionController {
   async list(
     @Param('type') type: PermissionOriginEnum
   ): Promise<ListPermissionDto[]> {
-    return this.permissionService.list(type);
+    return this.permissionService.listPermissionByType(type);
   }
 }
 
