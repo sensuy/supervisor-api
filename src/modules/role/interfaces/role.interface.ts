@@ -1,3 +1,4 @@
+import { PermissionRole } from "@modules/permission-role/repositories/typeorm/permission-role.entity";
 import { ICommonEntity } from "@shared/interfaces";
 
 export interface IRole extends ICommonEntity {
@@ -5,5 +6,6 @@ export interface IRole extends ICommonEntity {
   name: string;
   franchiseid?: string;
   schoolid?: string;
+  permissionRoles?: PermissionRole[];
 }
   

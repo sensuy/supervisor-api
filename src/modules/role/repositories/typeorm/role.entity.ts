@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { CommonEntity } from "@shared/common.entity";
 import { IRole } from "@modules/role/interfaces";
+import { PermissionRole } from "@modules/permission-role/repositories/typeorm/permission-role.entity";
 
 @Entity('role')
 export class Role extends CommonEntity implements IRole {
@@ -24,4 +25,7 @@ export class Role extends CommonEntity implements IRole {
     default: null
   })
   schoolid: string;
+
+  @OneToMany(() => PermissionRole, permissionRole => permissionRole.role)
+  permissionRoles: PermissionRole[];
 }
