@@ -1,8 +1,8 @@
-import { Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, PrimaryColumn } from "typeorm";
 import { CommonEntity } from "@shared/common.entity";
 import { IPermission } from "@modules/permission/interfaces/permission.interface";
 import { PermissionOriginEnum } from "@modules/permission/enum/permission-type.enum";
-import { PermissionRole } from "@modules/permission-role/repositories/typeorm/permission-role.entity";
+import { Role } from "@modules/role/repositories/typeorm/role.entity";
 
 @Entity('permission')
 export class Permission extends CommonEntity implements IPermission {
@@ -18,6 +18,6 @@ export class Permission extends CommonEntity implements IPermission {
   })
   type: PermissionOriginEnum;
 
-  @OneToMany(() => PermissionRole, permissionRole => permissionRole.permission)
-  permissionRoles: PermissionRole[];
+  @ManyToMany(() => Role, role => role.permissions)
+  roles: Role[];
 }

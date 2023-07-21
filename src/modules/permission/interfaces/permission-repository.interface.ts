@@ -9,4 +9,5 @@ export interface IPermissionRepository {
   save(permission: Permission): Promise<Permission>;
   findOne(permissionid: string): Promise<Permission | null>;
   listPermissionByType(type: PermissionOriginEnum): Promise<ListPermissionDto[]>;
+  findPermissionsByIds(permissionids: string[]): Promise<Permission[]>;
 }

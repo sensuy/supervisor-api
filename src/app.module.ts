@@ -8,7 +8,6 @@ import { UserModule } from '@modules/user/user.module';
 import { AuthModule } from '@modules/auth/auth.module';
 import { RoleModule } from './modules/role/role.module';
 import { PermissionModule } from './modules/permission/permission.module';
-import { PermissionRoleModule } from './modules/permission-role/permission-role.module';
 
 
 @Module({
@@ -26,8 +25,7 @@ import { PermissionRoleModule } from './modules/permission-role/permission-role.
     AuthModule,
     UserModule,
     RoleModule,
-    PermissionModule,
-    PermissionRoleModule
+    PermissionModule
   ],
   providers: [],
   controllers: [],

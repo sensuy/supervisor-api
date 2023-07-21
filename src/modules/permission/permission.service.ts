@@ -4,6 +4,7 @@ import { IPermissionRepository } from './interfaces/permission-repository.interf
 import { CreatePermissionDto, CreatePermissionResponseDto } from './dto/create-permission.dto';
 import { ListPermissionDto } from './dto/list-permission.dto';
 import { PermissionOriginEnum } from './enum/permission-type.enum';
+import { Permission } from './repositories/typeorm/permission.entity';
 
 @Injectable()
 export class PermissionService {
@@ -32,5 +33,9 @@ export class PermissionService {
 
   async listPermissionByType(type: PermissionOriginEnum): Promise<ListPermissionDto[]> {
     return this.permissionRepository.listPermissionByType(type);
+  }
+
+  async findPermissionsByIds(permissionids: string[]): Promise<Permission[]> {
+    return this.permissionRepository.findPermissionsByIds(permissionids);
   }
 }

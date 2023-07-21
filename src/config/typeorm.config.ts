@@ -1,5 +1,4 @@
 
-import { PermissionRole } from '@modules/permission-role/repositories/typeorm/permission-role.entity';
 import { Permission } from '@modules/permission/repositories/typeorm/permission.entity';
 import { Role } from '@modules/role/repositories/typeorm/role.entity';
 import { User } from '@modules/user/repositories/typeorm/user.entity';
@@ -18,7 +17,7 @@ export const typeormConfig = registerAs(
       database: process.env.DATABASE_NAME,
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
-      entities: [User, Role, Permission, PermissionRole],
+      entities: [User, Role, Permission],
       migrations: ['dist/src/shared/migrations/*{.ts,.js}'],
       logging: ['error', 'warn'],
       synchronize: false

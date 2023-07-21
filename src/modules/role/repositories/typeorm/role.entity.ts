@@ -1,7 +1,7 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { CommonEntity } from "@shared/common.entity";
 import { IRole } from "@modules/role/interfaces";
-import { PermissionRole } from "@modules/permission-role/repositories/typeorm/permission-role.entity";
+import { Permission } from "@modules/permission/repositories/typeorm/permission.entity";
 
 @Entity('role')
 export class Role extends CommonEntity implements IRole {
@@ -26,6 +26,17 @@ export class Role extends CommonEntity implements IRole {
   })
   schoolid: string;
 
-  @OneToMany(() => PermissionRole, permissionRole => permissionRole.role)
-  permissionRoles: PermissionRole[];
+  @ManyToMany(() => Permission, permission => permission.roles)
+  @JoinTable({
+    name: 'permission_role',
+    joinColumn: {
+      name: 'fk_roleid',
+      referencedColumnName: 'roleid'
+    },
+    inverseJoinColumn: {
+      name: 'fk_permissionid',
+      referencedColumnName: 'permissionid'
+    }
+  })
+  permissions: Permission[];
 }
