@@ -5,6 +5,7 @@ import { IRole } from './interfaces';
 import { CreateRoleResponseDto } from './dto/create-role.dto';
 import { ListRoleDto } from './dto/list-role.dto';
 import { UpdateRoleResponseDto } from './dto/update-role.dto';
+import { RoleAssignPermissionDto } from './dto/role-assign-permission.dto';
 
 describe('RoleController', () => {
   let controller: RoleController;
@@ -31,7 +32,8 @@ describe('RoleController', () => {
             findAllFranchiseRoles: jest.fn(),
             findAllSchoolRoles: jest.fn(),
             update: jest.fn(),
-            remove: jest.fn()
+            remove: jest.fn(),
+            assignPermissions: jest.fn()
           }
         }
       ],
@@ -51,7 +53,7 @@ describe('RoleController', () => {
       franchiseid: 'asdfasdfasdf',
       schoolid: 'asdfasdfasd'
     }
-    const {updatedAt, ...roleResponse} = role;
+    const { updatedAt, ...roleResponse } = role;
     const responseRole: CreateRoleResponseDto = roleResponse;
 
     jest.spyOn(service, 'create').mockResolvedValue(roleResponse);
@@ -63,8 +65,24 @@ describe('RoleController', () => {
     expect(service.create).toHaveBeenCalledTimes(1);
   });
 
+  it('should be able to assign permissions to a role', async () => {
+    const payload: RoleAssignPermissionDto = {
+      roleid: 1,
+      permissions: ['FRANCHISE_READ', 'FRANCHISE_WRITE']
+    }
+
+    jest.spyOn(service, 'assignPermissions').mockResolvedValue('Permissions assigned');
+
+    const response = await controller.assignPermissions(payload);
+
+    expect(response).toBe('Permissions assigned');
+    expect(service.assignPermissions).toHaveBeenCalledWith(payload);
+    expect(service.assignPermissions).toHaveBeenCalledTimes(1);
+
+  });
+
   it('should be able to list all roles by franchise', async () => {
-    const responseRole: ListRoleDto[] = [{roleid: 1, name: 'test'}];
+    const responseRole: ListRoleDto[] = [{ roleid: 1, name: 'test' }];
 
     jest.spyOn(service, 'findAllFranchiseRoles').mockResolvedValue(responseRole);
 
@@ -76,7 +94,7 @@ describe('RoleController', () => {
   });
 
   it('should be able to list all roles by school', async () => {
-    const responseRole: ListRoleDto[] = [{roleid: 1, name: 'test'}];
+    const responseRole: ListRoleDto[] = [{ roleid: 1, name: 'test' }];
 
     jest.spyOn(service, 'findAllSchoolRoles').mockResolvedValue(responseRole);
 
@@ -91,7 +109,7 @@ describe('RoleController', () => {
     const updateRoleDto = {
       name: 'test'
     }
-    const {createdAt, ...roleResponse} = role;
+    const { createdAt, ...roleResponse } = role;
     const responseRole: UpdateRoleResponseDto = roleResponse;
 
     jest.spyOn(service, 'update').mockResolvedValue(roleResponse);
@@ -104,7 +122,7 @@ describe('RoleController', () => {
   });
 
   it('should be able to remove a role', async () => {
-    const {createdAt, ...roleResponse} = role;
+    const { createdAt, ...roleResponse } = role;
     const responseRole: UpdateRoleResponseDto = roleResponse;
 
     jest.spyOn(service, 'remove').mockResolvedValue(responseRole);

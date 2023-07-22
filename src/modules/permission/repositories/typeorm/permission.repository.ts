@@ -1,5 +1,5 @@
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { In, Repository } from "typeorm";
 import { IPermissionRepository } from "@modules/permission/interfaces/permission-repository.interface";
 import { Permission } from "./permission.entity";
 import { CreatePermissionDto } from "@modules/permission/dto/create-permission.dto";
@@ -32,6 +32,12 @@ export class PermissionRepository implements IPermissionRepository {
         active: true
       },
       select: ['permissionid', 'label'],
+    });
+  }
+
+  findPermissionsByIds(permissionids: string[]): Promise<Permission[]> {
+    return this.repository.find({
+      where: { permissionid: In(permissionids) }
     });
   }
 

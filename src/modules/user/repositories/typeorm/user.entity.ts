@@ -1,6 +1,7 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { CommonEntity } from "@shared/common.entity";
 import { IUser } from "@shared/interfaces";
+import { Auth } from "@modules/auth/repositories/auth.entity";
 
 @Entity('user')
 export class User extends CommonEntity implements IUser {
@@ -14,4 +15,6 @@ export class User extends CommonEntity implements IUser {
   password: string;
   @Column({ type: 'text', nullable: false })
   salt: string;
+  @OneToMany(() => Auth, auth => auth.user)
+  authorizations?: Auth[];
 }

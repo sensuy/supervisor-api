@@ -6,10 +6,12 @@ import { CreateRoleDto } from './dto/create-role.dto';
 import { Not } from 'typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { ListRoleDto } from './dto/list-role.dto';
+import { PermissionService } from '@modules/permission/permission.service';
 
 describe('RoleService', () => {
   let service: RoleService;
   let roleRepository: IRoleRepository;
+  let permissionService: PermissionService
 
   const role: IRole = {
     roleid: 1,
@@ -36,6 +38,14 @@ describe('RoleService', () => {
             update: jest.fn()
           },
         },
+        {
+          provide: PermissionService,
+          useValue: {
+            create: jest.fn(),
+            listPermissionByType: jest.fn(),
+            findPermissionsByIds: jest.fn()
+          }
+        }
       ],
     }).compile();
 
@@ -71,7 +81,7 @@ describe('RoleService', () => {
 
   describe(RoleService.prototype.findAllFranchiseRoles, () => {
     it('Should be able to find all franchise roles', async () => {
-      const rolesFranchise: ListRoleDto[]  = [{ roleid: 1, name: 'test' }];
+      const rolesFranchise: ListRoleDto[] = [{ roleid: 1, name: 'test' }];
 
       jest.spyOn(roleRepository, 'findAllFranchiseRoles').mockResolvedValue(rolesFranchise);
 
@@ -85,7 +95,7 @@ describe('RoleService', () => {
 
   describe(RoleService.prototype.findAllSchoolRoles, () => {
     it('Should be able to find all school roles', async () => {
-      const rolesSchool: ListRoleDto[]  = [{ roleid: 1, name: 'test' }];
+      const rolesSchool: ListRoleDto[] = [{ roleid: 1, name: 'test' }];
       jest.spyOn(roleRepository, 'findAllSchoolRoles').mockResolvedValue(rolesSchool);
 
       const result: ListRoleDto[] = await service.findAllSchoolRoles('school-test');
@@ -111,7 +121,7 @@ describe('RoleService', () => {
       expect(roleRepository.update).toHaveBeenCalledWith(1, role);
       expect(roleRepository.update).toHaveBeenCalledTimes(1);
     });
-    
+
     it('Should throw an error if role does not exist', async () => {
       jest.spyOn(roleRepository, 'findById').mockResolvedValue(null);
 
@@ -136,7 +146,7 @@ describe('RoleService', () => {
       expect(roleRepository.update).toHaveBeenCalledWith(1, { ...role, active: false });
       expect(roleRepository.update).toHaveBeenCalledTimes(1);
     });
-    
+
     it('Should throw an error if role does not exist', async () => {
       jest.spyOn(roleRepository, 'findById').mockResolvedValue(null);
 

@@ -12,6 +12,7 @@ export class RoleDto
     type: 'number',
     title: 'roleid',
     description: 'Unique identifier for the role',
+    example: 1
   })
   roleid: number;
 
