@@ -15,6 +15,9 @@ import { Permission } from './repositories/typeorm/permission.entity';
       provide: IPERMISSION_REPOSITORY,
       useClass: PermissionRepository
     }
+  ],
+  exports: [
+    PermissionService
   ]
 })
 export class PermissionModule {}

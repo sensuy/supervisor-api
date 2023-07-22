@@ -22,7 +22,6 @@ import { BcryptService } from '@providers/hash/services/bcrypt.service';
       useClass: BcryptService
     },
   ],
-
   exports: [
     UserService
   ]

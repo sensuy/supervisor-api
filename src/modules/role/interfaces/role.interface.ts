@@ -1,3 +1,5 @@
+import { Auth } from "@modules/auth/repositories/auth.entity";
+import { Permission } from "@modules/permission/repositories/typeorm/permission.entity";
 import { ICommonEntity } from "@shared/interfaces";
 
 export interface IRole extends ICommonEntity {
@@ -5,5 +7,7 @@ export interface IRole extends ICommonEntity {
   name: string;
   franchiseid?: string;
   schoolid?: string;
+  permissions?: Permission[];
+  authorizations?: Auth[];
 }
   

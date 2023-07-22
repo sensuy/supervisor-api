@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, UsePipes } from '@nestjs/common';
 import { PermissionService } from './permission.service';
-import { ApiBadRequestResponse, ApiConflictResponse, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiConflictResponse, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { BadRequestDto, ConflictDto } from '@shared/errors';
 import { JoiValidationPipe } from '@shared/pipes/joi-validation.pipe';
 import { CreatePermissionDto, CreatePermissionResponseDto } from './dto/create-permission.dto';
@@ -41,6 +41,12 @@ export class PermissionController {
   @Get(':type')
   @ApiOperation({
     summary: 'List all permissions of a given type'
+  })
+  @ApiParam({
+    name: 'type',
+    enum: PermissionOriginEnum,
+    type: String,
+    description: 'The type of the permission'
   })
   @ApiOkResponse({
     description: 'The permissions has been successfully listed',

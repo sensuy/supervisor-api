@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, HttpCode } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { CreateRoleDto, CreateRoleResponseDto } from './dto/create-role.dto';
 import { UpdateRoleDto, UpdateRoleResponseDto } from './dto/update-role.dto';
-import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBody, ApiCreatedResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '@shared/pipes/joi-validation.pipe';
 import { roleCreateSchema } from './schemas/role-create.schema';
 import { nameSchema } from './schemas/name.schema';
@@ -11,7 +11,7 @@ import { schoolIdSchema } from './schemas/schoolid.schema';
 import { roleIdSchema } from './schemas/roleid.schema';
 import { ListRoleDto } from './dto/list-role.dto';
 import { BadRequestDto, NotFoundDto } from '@shared/errors';
-import { Not } from 'typeorm';
+import { RoleAssignPermissionDto } from './dto/role-assign-permission.dto';
 
 @ApiTags('Role')
 @Controller('role')
@@ -33,6 +33,26 @@ export class RoleController {
   @UsePipes(new JoiValidationPipe(roleCreateSchema))
   create(@Body() createRoleDto: CreateRoleDto): Promise<CreateRoleResponseDto> {
     return this.roleService.create(createRoleDto);
+  }
+
+  @Post('permission')
+  @ApiOperation({
+    summary: 'Assign permissions to a role'
+  })
+  @ApiNoContentResponse({
+    description: 'The permissions have been successfully assigned.'
+  })
+  @ApiBadRequestResponse({
+    description: 'Validation failed.',
+    type: BadRequestDto
+  })
+  @ApiNotFoundResponse({
+    description: 'Role or permissions not found',
+    type: NotFoundDto
+  })
+  @HttpCode(204)
+  assignPermissions(@Body() payload: RoleAssignPermissionDto): Promise<void> {
+    return this.roleService.assignPermissions(payload);
   }
 
   @Get('franchise/:idfranchise')

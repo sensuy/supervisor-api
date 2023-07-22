@@ -19,7 +19,8 @@ describe('PermissionController', () => {
           provide: PermissionService,
           useValue: {
             create: jest.fn(),
-            listPermissionByType: jest.fn()
+            listPermissionByType: jest.fn(),
+            findPermissionsByIds: jest.fn()
           }
         }
       ],
