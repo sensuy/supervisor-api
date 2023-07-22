@@ -1,16 +1,19 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { CommonEntity } from "@shared/common.entity";
 import { IRole } from "@modules/role/interfaces";
 import { Permission } from "@modules/permission/repositories/typeorm/permission.entity";
+import { Auth } from "@modules/auth/repositories/auth.entity";
 
 @Entity('role')
 export class Role extends CommonEntity implements IRole {
   @PrimaryGeneratedColumn('increment')
   roleid: number;
+
   @Column({
     type: 'text'
   })
   name: string;
+
   @Column({
     name: 'fk_franchiseid',
     type: 'text',
@@ -18,6 +21,7 @@ export class Role extends CommonEntity implements IRole {
     default: null
   })
   franchiseid: string;
+  
   @Column({
     name: 'fk_schoolid',
     type: 'text',
@@ -38,5 +42,8 @@ export class Role extends CommonEntity implements IRole {
       referencedColumnName: 'permissionid'
     }
   })
-  permissions: Permission[];
+  permissions?: Permission[];
+
+  @OneToMany(() => Auth, auth => auth.role)
+  authorizations?: Auth[];
 }

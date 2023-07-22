@@ -19,5 +19,5 @@ export class Permission extends CommonEntity implements IPermission {
   type: PermissionOriginEnum;
 
   @ManyToMany(() => Role, role => role.permissions)
-  roles: Role[];
+  roles?: Role[];
 }

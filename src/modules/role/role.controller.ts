@@ -42,8 +42,16 @@ export class RoleController {
   @ApiNoContentResponse({
     description: 'The permissions have been successfully assigned.'
   })
+  @ApiBadRequestResponse({
+    description: 'Validation failed.',
+    type: BadRequestDto
+  })
+  @ApiNotFoundResponse({
+    description: 'Role or permissions not found',
+    type: NotFoundDto
+  })
   @HttpCode(204)
-  assignPermissions(@Body() payload: RoleAssignPermissionDto) {
+  assignPermissions(@Body() payload: RoleAssignPermissionDto): Promise<void> {
     return this.roleService.assignPermissions(payload);
   }
 

@@ -25,7 +25,7 @@ export class RoleService {
     return roleResponse;
   }
 
-  async assignPermissions(payload: RoleAssignPermissionDto): Promise<string> {
+  async assignPermissions(payload: RoleAssignPermissionDto): Promise<void> {
     // return this.roleRepository.assignPermission();
     const { roleid, permissions } = payload;
 
@@ -44,11 +44,7 @@ export class RoleService {
     }
 
     role.permissions = permissionsFound;
-
-    const result = await this.roleRepository.save(role);
-    console.log({ result });
-
-    return 'Permissions assigned';
+    await this.roleRepository.save(role);
   }
 
   findAllFranchiseRoles(idfranchise: string): Promise<ListRoleDto[]> {
